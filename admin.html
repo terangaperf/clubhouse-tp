@@ -445,6 +445,10 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
           <div><div class="ptitle">Clubs partenaires</div><div class="psub" id="clubs-sub">Chargement...</div></div>
           <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
             <input class="fsearch" id="search-clubs" placeholder="Rechercher un club..." oninput="renderClubs()" style="width:200px">
+            <label style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--grey2);cursor:pointer;white-space:nowrap">
+              <input type="checkbox" id="show-test-clubs" onchange="renderClubs()" style="accent-color:var(--red)">
+              Afficher les clubs test
+            </label>
             <select id="filter-secteur-clubs" onchange="renderClubs()" style="padding:6px 10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:20px;color:var(--w);font-size:11px;font-family:var(--font);outline:none">
               <option value="">Tous les secteurs</option>
             </select>
@@ -558,6 +562,10 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       <label>CODE PIN CLUB <span style="font-size:9px;color:var(--gr)">→ Communiqué au référent pour se connecter</span></label>
       <input id="m-pin" placeholder="ex. 1234" maxlength="6" type="text" inputmode="numeric" style="letter-spacing:4px;font-family:var(--mono);font-size:18px;text-align:center">
     </div>
+    <div class="mf" style="display:flex;align-items:center;gap:10px">
+      <input type="checkbox" id="m-istest" style="width:16px;height:16px;accent-color:var(--red);cursor:pointer">
+      <label for="m-istest" style="font-size:11px;color:var(--red);cursor:pointer">🧪 Club de test — exclu des statistiques</label>
+    </div>
     <div class="modal-actions">
       <button class="mabtn cancel" onclick="closeModal()">Annuler</button>
       <button class="mabtn confirm" id="btn-add-club" onclick="saveClub()">Ajouter le club</button>
@@ -647,36 +655,54 @@ async function supaFetch(ep,opts={}){
 let currentUser = null;
 
 // ══ AUTHENTIFICATION SÉCURISÉE ══
-// Les credentials sont vérifiés via hash SHA-256
-// Ne jamais stocker les mots de passe en clair dans le code
+// Mots de passe hashés SHA-256 côté client avant vérification
+// Jamais de mot de passe en clair dans le code
 
 async function hashPwd(str){
   const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(str));
   return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
 }
 
-// Credentials hashés (SHA-256)
-// Pour regénérer : hashPwd('monmotdepasse').then(console.log)
-const CREDS = {
-  'mamadou': { hash: null, role: 'admin', name: 'Mamadou', pwd: 'teranga2026niang' },
-  'lea':     { hash: null, role: 'coord', name: 'Léa',     pwd: 'terangaleaperf2026alt' }
-};
-
 async function doLogin(){
   const id=document.getElementById('l-id').value.trim().toLowerCase();
   const pw=document.getElementById('l-pw').value.trim();
-  const user=CREDS[id];
-  if(!user){ document.getElementById('l-err').textContent='Identifiants incorrects'; return; }
-  // Vérification simple (la sécurité réelle viendra avec Supabase Auth en V2)
-  if(pw !== user.pwd){ document.getElementById('l-err').textContent='Identifiants incorrects'; return; }
-  currentUser={...user, id, pwd:undefined}; // Ne pas stocker le mot de passe en mémoire
-  document.getElementById('login').style.display='none';
-  document.getElementById('app').style.display='flex';
-  document.getElementById('top-date').textContent=new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-  document.getElementById('tb-username').textContent=user.name;
-  document.getElementById('tb-role').textContent=user.role==='admin'?'Direction':'Coordinatrice terrain';
-  applyRole(user.role);
-  loadAll();
+  if(!id||!pw){ document.getElementById('l-err').textContent='Remplissez tous les champs'; return; }
+
+  const btn=document.getElementById("btn-login");
+  if(btn){ btn.textContent='Connexion...'; btn.disabled=true; }
+
+  try{
+    // Hash du mot de passe
+    const pwHash=await hashPwd(pw);
+
+    // Hashes précalculés des mots de passe (SHA-256)
+    const HASHES={
+      'mamadou':{h:'579610b8bfdef2909209c2305067f6ca412a367fcd7cd7be090c295d79841a63',role:'admin',name:'Mamadou'},
+      'lea':{h:'0dcc6943de452ed01c13f63ac7aaaaae14ee856e249f390540220e982482e481',role:'coord',name:'Léa'}
+    };
+
+    const user=HASHES[id];
+    if(!user||user.h!==pwHash){
+      document.getElementById('l-err').textContent='Identifiants incorrects';
+      if(btn){ btn.textContent='Accéder →'; btn.disabled=false; }
+      return;
+    }
+    currentUser={id,role:user.role,name:user.name};
+
+    // Connexion réussie
+    document.getElementById('login').style.display='none';
+    document.getElementById('app').style.display='flex';
+    document.getElementById('top-date').textContent=new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+    document.getElementById('tb-username').textContent=currentUser.name;
+    document.getElementById('tb-role').textContent=currentUser.role==='admin'?'Direction':'Coordinatrice terrain';
+    applyRole(currentUser.role);
+    loadAll();
+    resetSessionTimer();
+
+  }catch(e){
+    document.getElementById('l-err').textContent='Erreur de connexion — réessayez';
+    if(btn){ btn.textContent='Accéder →'; btn.disabled=false; }
+  }
 }
 
 
@@ -725,7 +751,7 @@ async function loadAll(){
 }
 
 function clubMap(){const m={};AC.forEach(c=>m[c.id]=c);return m;}
-function monthV(){const n=new Date(),mo=n.getMonth(),yr=n.getFullYear();return AV.filter(v=>{const d=new Date(v.created_at);return d.getMonth()===mo&&d.getFullYear()===yr;});}
+function monthV(){const n=new Date(),mo=n.getMonth(),yr=n.getFullYear();const testIds=new Set(AC.filter(c=>c.is_test).map(c=>c.id));return AV.filter(v=>{const d=new Date(v.created_at);return d.getMonth()===mo&&d.getFullYear()===yr&&!testIds.has(v.club_id);});}
 
 function updateKPIs(){
   const mv=monthV();
@@ -873,7 +899,9 @@ function renderClubs(){
     sects.forEach(s=>{const o=document.createElement('option');o.value=s;o.textContent=s;sectSel.appendChild(o);});
   }
 
+  const showTest=document.getElementById('show-test-clubs')?.checked||false;
   let filtered=AC;
+  if(!showTest) filtered=filtered.filter(c=>!c.is_test);
   if(search) filtered=filtered.filter(c=>(c.nom+' '+c.referent+' '+(c.secteur||'')).toLowerCase().includes(search));
   if(sectFilter) filtered=filtered.filter(c=>c.secteur===sectFilter);
 
@@ -893,6 +921,7 @@ function renderClubs(){
         <div style="flex:1"><div class="cc-name">${c.nom}</div><div class="cc-ref">${c.referent}</div></div>
         <button data-club-id="${c.id}" onclick="openEditClub(this.dataset.clubId)" style="padding:4px 10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.5);border-radius:6px;font-size:10px;font-weight:600;cursor:pointer;white-space:nowrap;flex-shrink:0">✏️ Modifier</button>
       </div>
+      ${c.is_test?'<div class="cc-badge" style="background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.3);color:var(--red)">🧪 TEST</div>':''}
       ${c.secteur?`<div class="cc-badge">🎓 ${c.secteur}</div>`:'<div class="cc-badge" style="color:var(--ye);border-color:rgba(245,158,11,.2)">⚠ Secteur non défini</div>'}
       <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px;flex-wrap:wrap">
         ${getClubStatus(c.id)}
@@ -1045,7 +1074,7 @@ async function saveClub(){
   btn.textContent='⏳ Enregistrement...';btn.disabled=true;
   const res=await supaFetch('clubs',{
     method:'POST',
-    body:JSON.stringify({id:code,nom,referent:ref,avatar:avatar||code.slice(0,2),secteur:secteur||null,logo_url:logo_url||null,pin:pin||null}),
+    body:JSON.stringify({id:code,nom,referent:ref,avatar:avatar||code.slice(0,2),secteur:secteur||null,logo_url:logo_url||null,pin:pin||null,is_test:document.getElementById('m-istest')?.checked||false}),
     prefer:'return=minimal'
   });
   btn.textContent='Ajouter le club';btn.disabled=false;
@@ -2007,6 +2036,29 @@ function renderLivraisonsHisto(){
     </div>`;
   }).join('');
 }
+
+
+// ══ SESSION EXPIRATION ══
+let sessionTimer=null;
+const SESSION_DURATION=2*60*60*1000; // 2 heures
+
+function resetSessionTimer(){
+  if(sessionTimer) clearTimeout(sessionTimer);
+  sessionTimer=setTimeout(()=>{
+    if(currentUser){
+      currentUser=null;
+      document.getElementById('app').style.display='none';
+      document.getElementById('login').style.display='flex';
+      document.getElementById('l-err').textContent='Session expirée — reconnectez-vous';
+      document.getElementById('l-pw').value='';
+    }
+  },SESSION_DURATION);
+}
+
+// Réinitialiser le timer à chaque action
+['click','keypress','mousemove'].forEach(e=>{
+  document.addEventListener(e,()=>{ if(currentUser) resetSessionTimer(); },{passive:true});
+});
 
 document.getElementById('l-id').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('l-pw').focus();});
 </script>
