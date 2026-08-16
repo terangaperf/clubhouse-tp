@@ -2328,5 +2328,9 @@ function copyMsg(msg){
 
 document.getElementById('l-id').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('l-pw').focus();});
 </script>
-</body>
+</body><script>
+if (typeof SUPA_URL !== 'undefined' && typeof SUPA_KEY !== 'undefined') {
+  TerangaAuth.init({ supabaseUrl: SUPA_URL, anonKey: SUPA_KEY });
+}
+</script>
 </html>
