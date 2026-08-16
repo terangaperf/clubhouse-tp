@@ -1313,7 +1313,7 @@ function renderStockConso() {
   }).join('');
 }
 
-function updateStockAlerts() {
+function updateStockAlertsBase() {
   // Calculer stock global depuis secteurs
   const globalStock = {};
   ASS.forEach(s => {
@@ -1787,7 +1787,7 @@ async function saveStockSecteur(sectEncoded, sectId){
 }
 
 // Mettre à jour updateStockAlerts pour inclure les alertes secteur
-const _origUpdateStockAlerts=updateStockAlerts;
+const _origUpdateStockAlerts=updateStockAlertsBase;
 function updateStockAlerts(){
   _origUpdateStockAlerts();
   // Compter alertes secteur
