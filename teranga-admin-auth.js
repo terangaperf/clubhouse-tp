@@ -73,7 +73,7 @@ const TerangaAuth = (() => {
                        function renderLoginScreen(onSuccess) {
                              const overlay = document.createElement('div');
                              overlay.id = 'teranga-auth-overlay';
-                             overlay.style.cssText = 'position: fixed; inset: 0; background: #0b1220; z-index: 999999; display: flex; align-items: center; justify-content: center; font-family: system-ui, -apple-system, sans-serif;';
+                             overlay.style.cssText = 'visibility: visible; position: fixed; inset: 0; background: #0b1220; z-index: 999999; display: flex; align-items: center; justify-content: center; font-family: system-ui, -apple-system, sans-serif;';
                              overlay.innerHTML = '<div style="background:#fff;border-radius:14px;padding:32px;width:340px;max-width:90vw;box-shadow:0 10px 40px rgba(0,0,0,.3);">' +
                                      '<h2 style="margin:0 0 4px;font-size:20px;color:#111;">TERANGA PERF - Admin</h2>' +
                                      '<p style="margin:0 0 20px;font-size:13px;color:#666;">Connexion requise</p>' +
