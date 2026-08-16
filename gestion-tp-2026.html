@@ -994,7 +994,9 @@ function renderClubs(){
 
 // STATS
 function renderStats(){
-  const total=AV.length,livre=AV.filter(v=>v.statut==='livre').length;
+  const testClubIds=new Set(AC.filter(c=>c.is_test).map(c=>c.id));
+  const AV_real=AV.filter(v=>!testClubIds.has(v.club_id));
+  const total=AV_real.length,livre=AV_real.filter(v=>v.statut==='livre').length;
   const tx=total>0?Math.round(livre/total*100):0;
   document.getElementById('st-total').textContent=total;
   document.getElementById('st-livre').textContent=livre;
