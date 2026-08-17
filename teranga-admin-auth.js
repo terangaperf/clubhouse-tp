@@ -104,13 +104,16 @@ const TerangaAuth = (() => {
                              });
                        }
 
-                       function init(opts) {
+                       function init(opts, onReady) {
                              config = Object.assign({}, config, opts);
                              if (!isLoggedIn()) {
                                      document.documentElement.style.visibility = 'hidden';
                                      renderLoginScreen(() => {
                                                document.documentElement.style.visibility = 'visible';
+                                               if (typeof onReady === 'function') onReady();
                                      });
+                             } else {
+                                     if (typeof onReady === 'function') onReady();
                              }
                        }
 
