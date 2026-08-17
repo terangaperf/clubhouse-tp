@@ -686,7 +686,7 @@ const SUPA_KEY='sb_publishable__0FnifRMiDblovr8OE4ZWw_N37Dro8W';
 async function supaFetch(ep,opts={}){
   try{
     const r=await fetch(SUPA_URL+'/rest/v1/'+ep,{
-      headers:{'apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY,'Content-Type':'application/json','Prefer':opts.prefer||''},
+      headers:{'apikey':SUPA_KEY,'Authorization':(typeof TerangaAuth!=='undefined'?TerangaAuth.getAuthHeader():'Bearer '+SUPA_KEY),'Content-Type':'application/json','Prefer':opts.prefer||''},
       ...opts
     });
     if(!r.ok) return null;
