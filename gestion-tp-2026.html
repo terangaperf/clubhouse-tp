@@ -11,54 +11,54 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#060810;
-  --surf:rgba(255,255,255,.03);
-  --surf-solid:#0C1018;
-  --surf2:rgba(255,255,255,.05);
-  --surf3:rgba(255,255,255,.07);
-  --bd:rgba(255,255,255,.07);
-  --bd2:rgba(255,255,255,.13);
-  --bd-green:rgba(34,197,94,.25);
-  --gr:#22C55E;
-  --gr2:#34D399;
-  --gr-glow:rgba(34,197,94,.1);
-  --gr-glow2:rgba(34,197,94,.18);
-  --w:#ECF0FF;
-  --w2:rgba(236,240,255,.7);
-  --grey:rgba(255,255,255,.28);
-  --grey2:rgba(255,255,255,.45);
-  --red:#F87171;
-  --ye:#FBBF24;
-  --bl:#60A5FA;
-  --shadow:0 8px 32px rgba(0,0,0,.4);
-  --shadow-sm:0 4px 16px rgba(0,0,0,.3);
+  --bg:#F7F5F0;
+  --surf:#FFFFFF;
+  --surf-solid:#FFFFFF;
+  --surf2:#FFFFFF;
+  --surf3:#F0EEE7;
+  --bd:rgba(28,28,28,.10);
+  --bd2:rgba(28,28,28,.18);
+  --bd-green:rgba(62,142,62,.28);
+  --gr:#3E8E3E;
+  --gr2:#56A356;
+  --gr-glow:rgba(62,142,62,.09);
+  --gr-glow2:rgba(62,142,62,.18);
+  --w:#1C1C1C;
+  --w2:#46453E;
+  --grey:#8B8880;
+  --grey2:#6E6B62;
+  --red:#C0392B;
+  --ye:#B8860B;
+  --bl:#1D5B8F;
+  --shadow:0 8px 24px rgba(28,28,28,.10);
+  --shadow-sm:0 4px 12px rgba(28,28,28,.07);
   --font:'Plus Jakarta Sans',sans-serif;
   --mono:'DM Mono',monospace;
 }
-html,body{height:100%;background:var(--bg);color:var(--w);font-family:var(--font);overflow:hidden}body{background-image:radial-gradient(ellipse 120% 80% at 50% -30%,rgba(34,197,94,.07) 0%,transparent 60%),radial-gradient(ellipse 60% 40% at 90% 100%,rgba(34,197,94,.04) 0%,transparent 50%)}
-body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 60% 40% at 15% 20%,rgba(34,197,94,.06) 0%,transparent 55%),radial-gradient(ellipse 50% 35% at 85% 75%,rgba(96,165,250,.04) 0%,transparent 50%);pointer-events:none;z-index:0}
+html,body{height:100%;background:var(--bg);color:var(--w);font-family:var(--font);overflow:hidden}
+
 #login,#app{position:relative;z-index:1}
 
 
 /* Scrollbar */
 ::-webkit-scrollbar{width:4px;height:4px}
 ::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:2px}
-::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.2)}
+::-webkit-scrollbar-thumb{background:rgba(28,28,28,.14);border-radius:2px}
+::-webkit-scrollbar-thumb:hover{background:rgba(28,28,28,.28)}
 
 
-.bge-warn{background:rgba(245,158,11,.12);color:var(--ye);border:1px solid rgba(245,158,11,.22)}
-.bge-danger{background:rgba(239,68,68,.12);color:var(--red);border:1px solid rgba(239,68,68,.22)}
+.bge-warn{background:rgba(184,134,11,.12);color:var(--ye);border:1px solid rgba(184,134,11,.22)}
+.bge-danger{background:rgba(192,57,43,.12);color:var(--red);border:1px solid rgba(192,57,43,.22)}
 /* STOCK */
 .stock-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:24px}
-.stock-card{background:rgba(255,255,255,.04);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:18px;transition:all .2s;position:relative;overflow:hidden}
+.stock-card{background:rgba(28,28,28,.05);backdrop-filter:blur(8px);border:1px solid rgba(28,28,28,.11);border-radius:16px;padding:18px;transition:all .2s;position:relative;overflow:hidden}
 .stock-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:16px 16px 0 0}
 .stock-card.ok::before{background:var(--gr)}
 .stock-card.warn::before{background:var(--ye)}
 .stock-card.danger::before{background:var(--red)}
-.stock-card.ok{border-color:rgba(34,197,94,.15)}
-.stock-card.warn{border-color:rgba(245,158,11,.2)}
-.stock-card.danger{border-color:rgba(239,68,68,.25);background:rgba(239,68,68,.04)}
+.stock-card.ok{border-color:rgba(62,142,62,.15)}
+.stock-card.warn{border-color:rgba(184,134,11,.2)}
+.stock-card.danger{border-color:rgba(192,57,43,.25);background:rgba(192,57,43,.04)}
 .stock-coloris{font-size:13px;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:8px}
 .stock-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
 .stock-qty{font-size:32px;font-weight:800;font-family:var(--mono);line-height:1;margin:10px 0 4px}
@@ -66,13 +66,13 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .stock-qty.warn{color:var(--ye)}
 .stock-qty.danger{color:var(--red)}
 .stock-seuil{font-size:11px;color:var(--grey);margin-bottom:12px}
-.stock-bar{height:4px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden;margin-bottom:14px}
+.stock-bar{height:4px;background:rgba(28,28,28,.11);border-radius:2px;overflow:hidden;margin-bottom:14px}
 .stock-bar-fill{height:100%;border-radius:2px;transition:width .4s ease}
 .stock-inp{display:flex;gap:6px;align-items:center}
-.stock-inp input{flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:7px 10px;color:var(--w);font-size:13px;font-family:var(--mono);outline:none;text-align:center;font-weight:700}
-.stock-inp input:focus{border-color:rgba(34,197,94,.35)}
+.stock-inp input{flex:1;background:rgba(28,28,28,.08);border:1px solid rgba(28,28,28,.14);border-radius:8px;padding:7px 10px;color:var(--w);font-size:13px;font-family:var(--mono);outline:none;text-align:center;font-weight:700}
+.stock-inp input:focus{border-color:rgba(62,142,62,.35)}
 .stock-save{display:none}
-.stock-save:hover{background:var(--gr);color:#0A0A0A}
+.stock-save:hover{background:var(--gr);color:#FFFFFF}
 
 /* ALERTE STOCK dans commandes */
 .coloris-tag{display:inline-flex;align-items:center;gap:4px;font-size:11px}
@@ -82,11 +82,11 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .stock-ind.danger{background:var(--red)}
 
 /* BANDEAU ALERTE global */
-.alert-band{display:none;align-items:center;gap:10px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);border-radius:12px;padding:12px 16px;margin-bottom:18px}
+.alert-band{display:none;align-items:center;gap:10px;background:rgba(192,57,43,.08);border:1px solid rgba(192,57,43,.25);border-radius:12px;padding:12px 16px;margin-bottom:18px}
 .alert-band.on{display:flex}
 .alert-band-ico{font-size:16px;flex-shrink:0}
-.alert-band-txt{font-size:12px;color:rgba(255,255,255,.7);line-height:2}
-.alert-band-txt strong{color:#FCA5A5}
+.alert-band-txt{font-size:12px;color:var(--w2);line-height:2}
+.alert-band-txt strong{color:#8B2E20}
 
 #modal-edit{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:flex-end;justify-content:center;z-index:500;backdrop-filter:blur(4px)}
 #modal-edit.on{display:flex}
@@ -94,23 +94,23 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 #login{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:1000}
 .lbox{width:380px}
 .lbrand{display:flex;flex-direction:column;align-items:center;margin-bottom:36px}
-.lbrand img{width:68px;height:68px;object-fit:contain;border-radius:14px;margin-bottom:14px;box-shadow:0 0 0 1px rgba(34,197,94,.2),0 16px 32px rgba(0,0,0,.5)}
+.lbrand img{width:68px;height:68px;object-fit:contain;border-radius:14px;margin-bottom:14px;box-shadow:0 0 0 1px rgba(62,142,62,.2),0 16px 32px rgba(0,0,0,.5)}
 .lbrand-name{font-size:10px;font-weight:600;letter-spacing:3px;color:var(--gr);margin-bottom:5px}
 .ltitle{font-size:24px;font-weight:800;letter-spacing:-.5px}
-.lcard{background:rgba(255,255,255,.04);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:32px;box-shadow:0 20px 60px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.08)}
+.lcard{background:rgba(28,28,28,.05);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(28,28,28,.14);border-radius:20px;padding:32px;box-shadow:0 20px 60px rgba(0,0,0,.5),inset 0 1px 0 rgba(28,28,28,.11)}
 .llbl{font-size:10px;font-weight:600;letter-spacing:2px;color:var(--grey2);margin-bottom:7px;display:block}
-.linp{width:100%;background:rgba(255,255,255,.05);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:12px 14px;color:var(--w);font-size:14px;font-family:var(--font);outline:none;transition:all .2s;margin-bottom:14px}
-.linp:focus{border-color:var(--gr);box-shadow:0 0 0 3px rgba(34,197,94,.1)}
+.linp{width:100%;background:rgba(28,28,28,.07);backdrop-filter:blur(8px);border:1px solid rgba(28,28,28,.14);border-radius:10px;padding:12px 14px;color:var(--w);font-size:14px;font-family:var(--font);outline:none;transition:all .2s;margin-bottom:14px}
+.linp:focus{border-color:var(--gr);box-shadow:0 0 0 3px rgba(62,142,62,.1)}
 .linp::placeholder{color:var(--grey)}
-.lbtn{width:100%;padding:13px;background:var(--gr);color:#0A0A0A;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font);transition:all .2s;margin-top:6px}
-.lbtn:hover{background:var(--gr2);box-shadow:0 0 0 0 transparent,0 8px 24px rgba(34,197,94,.3);transform:translateY(-1px)}
+.lbtn{width:100%;padding:13px;background:var(--gr);color:#FFFFFF;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font);transition:all .2s;margin-top:6px}
+.lbtn:hover{background:var(--gr2);box-shadow:0 0 0 0 transparent,0 8px 24px rgba(62,142,62,.3);transform:translateY(-1px)}
 .lerr{font-size:12px;color:var(--red);text-align:center;margin-top:10px;min-height:16px;font-family:var(--mono)}
 
 /* APP */
 #app{display:none;height:100vh;flex-direction:column}
 
 /* TOPBAR */
-.topbar{height:58px;background:rgba(12,16,24,.8);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;padding:0 24px;gap:14px;flex-shrink:0;z-index:10;position:sticky;top:0}
+.topbar{height:58px;background:rgba(255,255,255,.85);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid rgba(28,28,28,.10);display:flex;align-items:center;padding:0 24px;gap:14px;flex-shrink:0;z-index:10;position:sticky;top:0}
 .topbar::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:1px;background:linear-gradient(90deg,var(--gr) 0%,transparent 40%)}.tb-logo{width:30px;height:30px;border-radius:7px;overflow:hidden;flex-shrink:0}
 .tb-logo img{width:100%;height:100%;object-fit:cover}
 .tb-name{font-size:13px;font-weight:700}
@@ -118,24 +118,24 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .tb-sep{flex:1}
 .tb-date{font-size:11px;color:var(--grey);font-family:var(--mono)}
 .tbtn{padding:5px 12px;border-radius:7px;border:1px solid var(--bd2);background:transparent;color:var(--grey2);font-size:11px;font-weight:600;cursor:pointer;font-family:var(--font);transition:all .15s}
-.tbtn:hover{color:var(--w);border-color:rgba(255,255,255,.2)}
+.tbtn:hover{color:var(--w);border-color:rgba(28,28,28,.28)}
 .tbtn.g{background:var(--gr-glow);border-color:var(--gr-bd);color:var(--gr)}
-.tbtn.g:hover{background:var(--gr);color:#0A0A0A}
+.tbtn.g:hover{background:var(--gr);color:#FFFFFF}
 .tbtn.r:hover{border-color:var(--red);color:var(--red)}
 
 /* BODY */
 .body{display:flex;flex:1;overflow:hidden}
 
 /* SIDEBAR */
-.sidebar{width:214px;background:rgba(12,16,24,.7);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-right:1px solid rgba(255,255,255,.06);padding:16px 12px;flex-shrink:0;display:flex;flex-direction:column;overflow-y:auto}
+.sidebar{width:214px;background:rgba(255,255,255,.75);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-right:1px solid rgba(28,28,28,.08);padding:16px 12px;flex-shrink:0;display:flex;flex-direction:column;overflow-y:auto}
 .nav-lbl{font-size:9px;font-weight:600;letter-spacing:2px;color:var(--grey);padding:10px 8px 5px;font-family:var(--mono)}
 .nav-lbl:first-child{padding-top:2px}
 .nb{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:500;color:var(--grey2);transition:all .2s;margin-bottom:2px;border:1px solid transparent}
 .nb:hover{background:var(--surf2);color:var(--w)}
-.nb.on{background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.22);color:var(--gr);font-weight:600;box-shadow:inset 0 1px 0 rgba(34,197,94,.1)}
+.nb.on{background:rgba(62,142,62,.1);border-color:rgba(62,142,62,.22);color:var(--gr);font-weight:600;box-shadow:inset 0 1px 0 rgba(62,142,62,.1)}
 .nb-ico{width:16px;text-align:center;font-size:13px;flex-shrink:0}
 .sb-stats{margin-top:auto;padding-top:14px;border-top:1px solid var(--bd)}
-.ss{background:rgba(255,255,255,.04);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:10px 12px;margin-bottom:6px;transition:all .2s}.ss:hover{border-color:rgba(34,197,94,.2)}
+.ss{background:rgba(28,28,28,.05);backdrop-filter:blur(8px);border:1px solid rgba(28,28,28,.10);border-radius:10px;padding:10px 12px;margin-bottom:6px;transition:all .2s}.ss:hover{border-color:rgba(62,142,62,.2)}
 .ss-v{font-size:17px;font-weight:800;font-family:var(--mono);letter-spacing:-.3px}
 .ss-l{font-size:10px;color:var(--grey);margin-top:1px}
 
@@ -151,18 +151,18 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 
 /* KPI GRID */
 .kgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
-.kcard{background:rgba(255,255,255,.04);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:20px 22px;transition:all .25s;position:relative;overflow:hidden}.kcard::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.08),transparent)}.kcard:hover{border-color:rgba(34,197,94,.2);transform:translateY(-2px);box-shadow:0 12px 32px rgba(0,0,0,.3)}
+.kcard{background:rgba(28,28,28,.05);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(28,28,28,.11);border-radius:16px;padding:20px 22px;transition:all .25s;position:relative;overflow:hidden}.kcard::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(28,28,28,.11),transparent)}.kcard:hover{border-color:rgba(62,142,62,.2);transform:translateY(-2px);box-shadow:0 12px 32px rgba(0,0,0,.3)}
 .kv{font-size:30px;font-weight:800;font-family:var(--mono);line-height:1;margin-bottom:6px;letter-spacing:-1px}
-.kv.g{color:var(--gr);text-shadow:0 0 20px rgba(34,197,94,.3)}
+.kv.g{color:var(--gr);text-shadow:0 0 20px rgba(62,142,62,.3)}
 .kv.y{color:var(--ye)}
 .kl{font-size:11px;color:var(--grey);font-weight:500}
 .ks{font-size:10px;color:var(--gr);margin-top:3px;font-family:var(--mono)}
 
 /* NOTIF */
-.notif{display:flex;align-items:center;gap:12px;background:rgba(34,197,94,.07);backdrop-filter:blur(8px);border:1px solid rgba(34,197,94,.2);border-radius:12px;padding:13px 16px;margin-bottom:20px}
+.notif{display:flex;align-items:center;gap:12px;background:rgba(62,142,62,.07);backdrop-filter:blur(8px);border:1px solid rgba(62,142,62,.2);border-radius:12px;padding:13px 16px;margin-bottom:20px}
 
 50%{opacity:.25}}
-.notif-txt{font-size:12px;color:rgba(255,255,255,.6);line-height:1.6}
+.notif-txt{font-size:12px;color:var(--w2);line-height:1.6}
 .notif-txt strong{color:var(--w);font-weight:700}
 
 /* STITLE */
@@ -170,10 +170,10 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .st:first-child{margin-top:0}
 
 /* CARD + ROWS */
-.card{background:rgba(255,255,255,.03);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.07);border-radius:16px;overflow:hidden;margin-bottom:16px}
-.row{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.05);transition:background .15s}
+.card{background:rgba(28,28,28,.04);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(28,28,28,.10);border-radius:16px;overflow:hidden;margin-bottom:16px}
+.row{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid rgba(28,28,28,.07);transition:background .15s}
 .row:last-child{border-bottom:none}
-.row:hover{background:rgba(255,255,255,.04)}
+.row:hover{background:rgba(28,28,28,.05)}
 .rn{font-size:13px;font-weight:600;color:var(--w);margin-bottom:1px}
 .rd{font-size:11px;color:var(--grey)}
 .rr{display:flex;flex-direction:column;align-items:flex-end;gap:3px}
@@ -181,37 +181,37 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 
 /* BADGES */
 .bge{font-size:9px;font-weight:700;padding:3px 8px;border-radius:5px;letter-spacing:.5px;font-family:var(--mono)}
-.bge-ok{background:rgba(34,197,94,.12);color:var(--gr);border:1px solid var(--gr-bd)}
-.bge-pend{background:rgba(245,158,11,.12);color:var(--ye);border:1px solid rgba(245,158,11,.22)}
+.bge-ok{background:rgba(62,142,62,.12);color:var(--gr);border:1px solid var(--gr-bd)}
+.bge-pend{background:rgba(184,134,11,.12);color:var(--ye);border:1px solid rgba(184,134,11,.22)}
 
 /* FILTERS */
 .filters{display:flex;gap:7px;margin-bottom:12px;align-items:center;flex-wrap:wrap}
-.fb{padding:5px 12px;border-radius:20px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:var(--grey2);font-size:11px;font-weight:600;cursor:pointer;font-family:var(--font);transition:all .15s;backdrop-filter:blur(4px)}
-.fb:hover{color:var(--w);border-color:rgba(255,255,255,.2)}
-.fb.on{background:rgba(34,197,94,.12);border-color:rgba(34,197,94,.3);color:var(--gr);box-shadow:0 0 12px rgba(34,197,94,.1)}
-.fsearch{padding:6px 13px;border-radius:20px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);backdrop-filter:blur(8px);color:var(--w);font-size:11px;outline:none;font-family:var(--font);margin-left:auto;width:200px;transition:all .2s}
-.fsearch:focus{border-color:rgba(34,197,94,.35);box-shadow:0 0 0 3px rgba(34,197,94,.06)}
+.fb{padding:5px 12px;border-radius:20px;border:1px solid rgba(28,28,28,.14);background:rgba(28,28,28,.05);color:var(--grey2);font-size:11px;font-weight:600;cursor:pointer;font-family:var(--font);transition:all .15s;backdrop-filter:blur(4px)}
+.fb:hover{color:var(--w);border-color:rgba(28,28,28,.28)}
+.fb.on{background:rgba(62,142,62,.12);border-color:rgba(62,142,62,.3);color:var(--gr);box-shadow:0 0 12px rgba(62,142,62,.1)}
+.fsearch{padding:6px 13px;border-radius:20px;border:1px solid rgba(28,28,28,.14);background:rgba(28,28,28,.07);backdrop-filter:blur(8px);color:var(--w);font-size:11px;outline:none;font-family:var(--font);margin-left:auto;width:200px;transition:all .2s}
+.fsearch:focus{border-color:rgba(62,142,62,.35);box-shadow:0 0 0 3px rgba(62,142,62,.06)}
 .fsearch::placeholder{color:var(--grey)}
 
 /* TABLE */
-.tw{background:rgba(255,255,255,.03);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.07);border-radius:16px;overflow:hidden}
-.thead{display:grid;grid-template-columns:1.5fr 1fr .8fr 1fr 50px 80px 110px;padding:11px 16px;background:rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.07)}
+.tw{background:rgba(28,28,28,.04);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(28,28,28,.10);border-radius:16px;overflow:hidden}
+.thead{display:grid;grid-template-columns:1.5fr 1fr .8fr 1fr 50px 80px 110px;padding:11px 16px;background:rgba(28,28,28,.05);border-bottom:1px solid rgba(28,28,28,.10)}
 .th{font-size:9px;font-weight:600;letter-spacing:1.5px;color:var(--grey);font-family:var(--mono)}
 .tbody{max-height:calc(100vh - 420px);overflow-y:auto}
 .tr{display:grid;grid-template-columns:1.5fr 1fr .8fr 1fr 50px 80px 110px;padding:12px 16px;border-bottom:1px solid var(--bd);align-items:center;transition:background .15s}
-.tr:hover{background:rgba(255,255,255,.04)}
+.tr:hover{background:rgba(28,28,28,.05)}
 .tr:last-child{border-bottom:none}
 .tr-n{font-size:13px;font-weight:600;color:var(--w);margin-bottom:2px}
 .tr-s{font-size:10px;color:var(--grey)}
 
 /* BTN LIVRER */
 .bl{padding:5px 12px;background:var(--gr-glow);border:1px solid var(--gr-bd);color:var(--gr);border-radius:6px;font-size:10px;font-weight:700;cursor:pointer;font-family:var(--font);transition:all .2s;white-space:nowrap;letter-spacing:.3px}
-.bl:hover{background:var(--gr);color:#0A0A0A}
+.bl:hover{background:var(--gr);color:#FFFFFF}
 .bl:disabled{opacity:.35;cursor:default}
 
 /* TOP CARDS */
 .tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:9px;margin-bottom:20px}
-.tc{background:rgba(255,255,255,.04);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;transition:all .2s}.tc:hover{border-color:rgba(34,197,94,.2);transform:translateY(-1px)}
+.tc{background:rgba(28,28,28,.05);backdrop-filter:blur(8px);border:1px solid rgba(28,28,28,.10);border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;transition:all .2s}.tc:hover{border-color:rgba(62,142,62,.2);transform:translateY(-1px)}
 .tc-rank{font-size:16px;width:24px;text-align:center;flex-shrink:0}
 .tc-info{flex:1;min-width:0}
 .tc-name{font-size:12px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -220,14 +220,14 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 
 /* CLUBS GRID */
 .cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:11px}
-.cc{background:rgba(255,255,255,.04);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:18px;transition:all .2s}
-.cc:hover{border-color:rgba(34,197,94,.2);transform:translateY(-1px);box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.cc{background:rgba(28,28,28,.05);backdrop-filter:blur(8px);border:1px solid rgba(28,28,28,.10);border-radius:16px;padding:18px;transition:all .2s}
+.cc:hover{border-color:rgba(62,142,62,.2);transform:translateY(-1px);box-shadow:0 8px 24px rgba(0,0,0,.2)}
 .cc-top{display:flex;align-items:center;gap:10px;margin-bottom:12px}
 .cc-logo{width:38px;height:38px;border-radius:8px;object-fit:cover;background:var(--gr-glow);border:1px solid var(--gr-bd);flex-shrink:0}
 .cc-av{width:38px;height:38px;border-radius:8px;background:var(--gr-glow);border:1px solid var(--gr-bd);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:var(--gr);font-family:var(--mono);flex-shrink:0}
 .cc-name{font-size:13px;font-weight:700;margin-bottom:1px}
 .cc-ref{font-size:11px;color:var(--grey)}
-.cc-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(34,197,94,.07);border:1px solid rgba(34,197,94,.18);padding:3px 9px;border-radius:20px;font-size:10px;color:rgba(34,197,94,.9);margin-bottom:11px}
+.cc-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(62,142,62,.07);border:1px solid rgba(62,142,62,.18);padding:3px 9px;border-radius:20px;font-size:10px;color:rgba(62,142,62,.9);margin-bottom:11px}
 .cc-stats{display:flex;gap:14px;margin-bottom:10px}
 .cc-sv{font-size:16px;font-weight:800;font-family:var(--mono)}
 .cc-sl{font-size:10px;color:var(--grey);margin-top:1px}
@@ -235,35 +235,35 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 
 /* LIVRAISONS */
 .lv-secteur{margin-bottom:20px}
-.lv-head{display:flex;align-items:center;gap:10px;padding:13px 16px;background:rgba(34,197,94,.07);backdrop-filter:blur(8px);border:1px solid rgba(34,197,94,.18);border-radius:14px 14px 0 0;border-bottom:1px solid rgba(34,197,94,.15)}
+.lv-head{display:flex;align-items:center;gap:10px;padding:13px 16px;background:rgba(62,142,62,.07);backdrop-filter:blur(8px);border:1px solid rgba(62,142,62,.18);border-radius:14px 14px 0 0;border-bottom:1px solid rgba(62,142,62,.15)}
 .lv-campus{font-size:13px;font-weight:700;color:var(--gr)}
 .lv-count{font-size:10px;font-weight:600;background:var(--gr-glow);border:1px solid var(--gr-bd);color:var(--gr);padding:2px 8px;border-radius:20px;font-family:var(--mono)}
-.lv-rows{background:rgba(255,255,255,.03);backdrop-filter:blur(8px);border:1px solid rgba(34,197,94,.12);border-top:none;border-radius:0 0 14px 14px;overflow:hidden}
-.lv-row{display:grid;grid-template-columns:1.5fr 1fr 1fr 60px 80px;padding:11px 18px;border-bottom:1px solid rgba(255,255,255,.05);font-size:12px;align-items:center}
+.lv-rows{background:rgba(28,28,28,.04);backdrop-filter:blur(8px);border:1px solid rgba(62,142,62,.12);border-top:none;border-radius:0 0 14px 14px;overflow:hidden}
+.lv-row{display:grid;grid-template-columns:1.5fr 1fr 1fr 60px 80px;padding:11px 18px;border-bottom:1px solid rgba(28,28,28,.07);font-size:12px;align-items:center}
 .lv-row:last-child{border-bottom:none}
 .lv-head-row{display:grid;grid-template-columns:1.5fr 1fr 1fr 60px 80px;padding:8px 16px;background:var(--surf2);border-bottom:1px solid var(--bd);font-size:9px;font-weight:600;letter-spacing:1.5px;color:var(--grey);font-family:var(--mono)}
 
 /* MODAL */
 #modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:flex-end;justify-content:center;z-index:500;backdrop-filter:blur(4px)}
 #modal-overlay.on{display:flex}
-.modal{background:rgba(14,20,30,.9);backdrop-filter:blur(32px);-webkit-backdrop-filter:blur(32px);border-radius:20px 20px 0 0;width:100%;max-width:480px;padding:30px;border-top:1px solid rgba(34,197,94,.25);box-shadow:0 -24px 60px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.06)}
+.modal{background:#FFFFFF;backdrop-filter:blur(32px);-webkit-backdrop-filter:blur(32px);border-radius:20px 20px 0 0;width:100%;max-width:480px;padding:30px;border-top:1px solid rgba(62,142,62,.25);box-shadow:0 -24px 60px rgba(0,0,0,.6),inset 0 1px 0 rgba(28,28,28,.08)}
 .modal-title{font-size:16px;font-weight:800;margin-bottom:20px}
 .mf{margin-bottom:14px}
 .mf label{display:block;font-size:10px;font-weight:600;letter-spacing:1.5px;color:var(--grey2);margin-bottom:6px}
-.mf input,.mf select{width:100%;background:rgba(255,255,255,.06);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:11px 13px;color:var(--w);font-size:13px;font-family:var(--font);outline:none;transition:all .2s}
-.mf input:focus,.mf select:focus{border-color:var(--gr);box-shadow:0 0 0 3px rgba(34,197,94,.1)}
-.mf select option{background:#151B24}
+.mf input,.mf select{width:100%;background:rgba(28,28,28,.08);backdrop-filter:blur(8px);border:1px solid rgba(28,28,28,.14);border-radius:10px;padding:11px 13px;color:var(--w);font-size:13px;font-family:var(--font);outline:none;transition:all .2s}
+.mf input:focus,.mf select:focus{border-color:var(--gr);box-shadow:0 0 0 3px rgba(62,142,62,.1)}
+.mf select option{background:#FFFFFF}
 .modal-actions{display:flex;gap:8px;margin-top:20px}
 .mabtn{flex:1;padding:11px;border-radius:8px;border:none;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);transition:all .15s}
 .mabtn.cancel{background:var(--surf2);color:var(--grey2)}
 .mabtn.cancel:hover{color:var(--w)}
-.mabtn.confirm{background:var(--gr);color:#0A0A0A}
-.mabtn.confirm:hover{background:#16A34A}
+.mabtn.confirm{background:var(--gr);color:#FFFFFF}
+.mabtn.confirm:hover{background:#2E6B2E}
 
 /* STATS */
 .sr{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.sc{background:rgba(255,255,255,.03);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.07);border-radius:16px;overflow:hidden}
-.sc-head{padding:11px 16px;border-bottom:1px solid rgba(255,255,255,.06);font-size:9px;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,.35);font-family:var(--mono)}
+.sc{background:rgba(28,28,28,.04);backdrop-filter:blur(10px);border:1px solid rgba(28,28,28,.10);border-radius:16px;overflow:hidden}
+.sc-head{padding:11px 16px;border-bottom:1px solid rgba(28,28,28,.08);font-size:9px;font-weight:700;letter-spacing:2px;color:var(--grey);font-family:var(--mono)}
 .si{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid var(--bd)}
 .si:last-child{border-bottom:none}
 .si-l{font-size:12px;font-weight:600}
@@ -281,20 +281,20 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 @keyframes p{0%,100%{opacity:.2;transform:scale(.8)}50%{opacity:1;transform:scale(1)}}
 
 /* TOAST */
-#toast{position:fixed;bottom:24px;right:24px;background:rgba(34,197,94,.9);backdrop-filter:blur(16px);color:#0A0A0A;padding:11px 18px;border-radius:10px;font-size:12px;font-weight:700;font-family:var(--font);transform:translateY(50px);opacity:0;transition:all .3s cubic-bezier(.34,1.56,.64,1);z-index:2000;box-shadow:0 8px 24px rgba(34,197,94,.3)}
+#toast{position:fixed;bottom:24px;right:24px;background:rgba(62,142,62,.9);backdrop-filter:blur(16px);color:#FFFFFF;padding:11px 18px;border-radius:10px;font-size:12px;font-weight:700;font-family:var(--font);transform:translateY(50px);opacity:0;transition:all .3s cubic-bezier(.34,1.56,.64,1);z-index:2000;box-shadow:0 8px 24px rgba(62,142,62,.3)}
 #toast.on{transform:translateY(0);opacity:1}
 #toast.err{background:var(--red);color:#fff}
 
 /* ACTIONS URGENTES */
 .urgent-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
 .urgent-card{
-  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);
+  background:rgba(28,28,28,.04);border:1px solid rgba(28,28,28,.10);
   border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;
   transition:all .2s;cursor:default;
 }
-.urgent-card.rouge{background:rgba(239,68,68,.07);border-color:rgba(239,68,68,.2)}
-.urgent-card.jaune{background:rgba(251,191,36,.07);border-color:rgba(251,191,36,.2)}
-.urgent-card.vert{background:rgba(34,197,94,.07);border-color:rgba(34,197,94,.2)}
+.urgent-card.rouge{background:rgba(192,57,43,.07);border-color:rgba(192,57,43,.2)}
+.urgent-card.jaune{background:rgba(184,134,11,.07);border-color:rgba(184,134,11,.2)}
+.urgent-card.vert{background:rgba(62,142,62,.07);border-color:rgba(62,142,62,.2)}
 .urgent-ico{font-size:24px;flex-shrink:0}
 .urgent-v{font-size:22px;font-weight:800;font-family:var(--mono);line-height:1}
 .urgent-v.rouge{color:var(--red)}
@@ -339,7 +339,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         <div style="font-size:10px;color:var(--grey)" id="tb-role"></div>
       </div>
       <button class="tbtn g" onclick="loadAll()">↻ Actualiser</button>
-      <button class="tbtn admin-only" onclick="openAddClub()" style="border-color:rgba(96,165,250,.25);color:#93C5FD;background:rgba(96,165,250,.08);backdrop-filter:blur(8px)">+ Ajouter club</button>
+      <button class="tbtn admin-only" onclick="openAddClub()" style="border-color:rgba(29,91,143,.25);color:#1D5B8F;background:rgba(29,91,143,.08);backdrop-filter:blur(8px)">+ Ajouter club</button>
       <button class="tbtn r" onclick="logout()">Déconnexion</button>
     </div>
   </div>
@@ -427,15 +427,15 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
             <div class="psub" id="lv-psub">Commandes en cours, regroupées par secteur WSS</div>
           </div>
           <div style="display:flex;gap:8px;flex-shrink:0;margin-top:4px;flex-wrap:wrap;align-items:center">
-            <div style="display:flex;border:1px solid rgba(255,255,255,.1);border-radius:8px;overflow:hidden">
-              <button id="lv-tab-encours" onclick="setLvTab('encours')" style="padding:5px 12px;background:var(--gr);color:#050810;border:none;font-size:11px;font-weight:700;cursor:pointer;font-family:var(--font)">En cours</button>
+            <div style="display:flex;border:1px solid rgba(28,28,28,.14);border-radius:8px;overflow:hidden">
+              <button id="lv-tab-encours" onclick="setLvTab('encours')" style="padding:5px 12px;background:var(--gr);color:#FFFFFF;border:none;font-size:11px;font-weight:700;cursor:pointer;font-family:var(--font)">En cours</button>
               <button id="lv-tab-histo" onclick="setLvTab('histo')" style="padding:5px 12px;background:transparent;color:var(--grey2);border:none;font-size:11px;font-weight:600;cursor:pointer;font-family:var(--font)">Historique</button>
             </div>
-            <select id="lv-semaine" onchange="renderLivraisons()" style="padding:5px 10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:6px;color:var(--w);font-size:11px;font-family:var(--font);outline:none;display:none" id="lv-semaine">
+            <select id="lv-semaine" onchange="renderLivraisons()" style="padding:5px 10px;background:rgba(28,28,28,.07);border:1px solid rgba(28,28,28,.14);border-radius:6px;color:var(--w);font-size:11px;font-family:var(--font);outline:none;display:none" id="lv-semaine">
               <option value="">Toutes les semaines</option>
             </select>
             <button class="tbtn g" onclick="copierTousRecaps()" style="font-size:12px" id="btn-copier-tout">📋 Copier tout</button>
-            <button class="tbtn" onclick="exporterPDF()" style="font-size:12px;border-color:rgba(59,130,246,.3);color:#93C5FD;background:rgba(59,130,246,.08)" id="btn-export-pdf">📄 PDF</button>
+            <button class="tbtn" onclick="exporterPDF()" style="font-size:12px;border-color:rgba(29,91,143,.3);color:#1D5B8F;background:rgba(29,91,143,.08)" id="btn-export-pdf">📄 PDF</button>
           </div>
         </div>
         <div id="lv-content"><div class="spin"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>
@@ -451,7 +451,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
               <input type="checkbox" id="show-test-clubs" onchange="renderClubs()" style="accent-color:var(--red)">
               Afficher les clubs test
             </label>
-            <select id="filter-secteur-clubs" onchange="renderClubs()" style="padding:6px 10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:20px;color:var(--w);font-size:11px;font-family:var(--font);outline:none">
+            <select id="filter-secteur-clubs" onchange="renderClubs()" style="padding:6px 10px;background:rgba(28,28,28,.07);border:1px solid rgba(28,28,28,.14);border-radius:20px;color:var(--w);font-size:11px;font-family:var(--font);outline:none">
               <option value="">Tous les secteurs</option>
             </select>
           </div>
@@ -488,7 +488,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
             <div class="psub">Copie les messages depuis le numéro WhatsApp Business TERANGA PERF</div>
           </div>
           <div style="display:flex;gap:8px;flex-shrink:0;margin-top:4px">
-            <select id="msg-filter" onchange="renderMessages()" style="padding:5px 10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:6px;color:var(--w);font-size:11px;font-family:var(--font);outline:none">
+            <select id="msg-filter" onchange="renderMessages()" style="padding:5px 10px;background:rgba(28,28,28,.07);border:1px solid rgba(28,28,28,.14);border-radius:6px;color:var(--w);font-size:11px;font-family:var(--font);outline:none">
               <option value="all">Tous</option>
               <option value="no_tel">Sans numéro</option>
               <option value="en_cours">En cours</option>
@@ -497,7 +497,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
           </div>
         </div>
         <!-- Bandeau infos -->
-        <div style="background:rgba(37,211,102,.08);border:1px solid rgba(37,211,102,.2);border-radius:12px;padding:14px 16px;margin-bottom:20px;font-size:12px;color:rgba(255,255,255,.7);line-height:1.7">
+        <div style="background:rgba(37,211,102,.08);border:1px solid rgba(37,211,102,.2);border-radius:12px;padding:14px 16px;margin-bottom:20px;font-size:12px;color:var(--w2);line-height:1.7">
           📱 Envoyez ces messages depuis votre <strong style="color:#25D366">WhatsApp Business TERANGA PERF</strong> dédié.<br>
           Copiez le message → ouvrez WhatsApp → cherchez le numéro du joueur → collez et envoyez.
         </div>
@@ -515,7 +515,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
           </div>
           <div style="display:flex;gap:8px;flex-shrink:0;margin-top:4px">
             <button class="tbtn g" onclick="renderStockSecteur()" style="font-size:12px">↻ Actualiser</button>
-            <select id="filter-secteur" onchange="renderStockSecteur()" style="padding:5px 10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:6px;color:var(--w);font-size:11px;font-family:var(--font);outline:none">
+            <select id="filter-secteur" onchange="renderStockSecteur()" style="padding:5px 10px;background:rgba(28,28,28,.07);border:1px solid rgba(28,28,28,.14);border-radius:6px;color:var(--w);font-size:11px;font-family:var(--font);outline:none">
               <option value="">Tous les secteurs</option>
             </select>
           </div>
@@ -534,12 +534,12 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
           </div>
         </div>
         <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px" id="stats-kpis"></div>
-        <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:16px;margin-bottom:16px" id="stats-compare">
-          <div style="font-size:11px;font-weight:700;letter-spacing:1px;color:rgba(255,255,255,.4);margin-bottom:12px">COMPARAISON MOIS/MOIS</div>
+        <div style="background:rgba(28,28,28,.04);border:1px solid rgba(28,28,28,.10);border-radius:14px;padding:16px;margin-bottom:16px" id="stats-compare">
+          <div style="font-size:11px;font-weight:700;letter-spacing:1px;color:var(--grey);margin-bottom:12px">COMPARAISON MOIS/MOIS</div>
           <div id="stats-compare-content"></div>
         </div>
-        <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:16px;margin-bottom:16px">
-          <div style="font-size:11px;font-weight:700;letter-spacing:1px;color:rgba(255,255,255,.4);margin-bottom:12px">ÉVOLUTION SEMAINE PAR SEMAINE</div>
+        <div style="background:rgba(28,28,28,.04);border:1px solid rgba(28,28,28,.10);border-radius:14px;padding:16px;margin-bottom:16px">
+          <div style="font-size:11px;font-weight:700;letter-spacing:1px;color:var(--grey);margin-bottom:12px">ÉVOLUTION SEMAINE PAR SEMAINE</div>
           <div id="stats-weekly"></div>
         </div>
         <div class="kgrid" style="grid-template-columns:repeat(3,1fr)">
@@ -592,10 +592,10 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     <div class="mf">
       <label>LOGO DU CLUB</label>
       <div style="display:flex;gap:8px;align-items:center">
-        <div id="m-logo-preview" style="width:44px;height:44px;border-radius:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;overflow:hidden">🏟</div>
+        <div id="m-logo-preview" style="width:44px;height:44px;border-radius:10px;background:rgba(28,28,28,.08);border:1px solid rgba(28,28,28,.14);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;overflow:hidden">🏟</div>
         <div style="flex:1">
           <input type="file" id="m-logo-file" accept="image/*" onchange="previewLogo('m-logo-preview','m-logo-url',this)" style="display:none">
-          <button type="button" onclick="document.getElementById('m-logo-file').click()" style="width:100%;padding:9px;background:rgba(255,255,255,.05);border:1px dashed rgba(255,255,255,.2);border-radius:8px;color:rgba(255,255,255,.6);font-size:12px;cursor:pointer;font-family:var(--font)">📁 Choisir depuis Mac / iPhone</button>
+          <button type="button" onclick="document.getElementById('m-logo-file').click()" style="width:100%;padding:9px;background:rgba(28,28,28,.07);border:1px dashed rgba(28,28,28,.28);border-radius:8px;color:var(--w2);font-size:12px;cursor:pointer;font-family:var(--font)">📁 Choisir depuis Mac / iPhone</button>
           <input type="hidden" id="m-logo-url">
         </div>
       </div>
@@ -656,10 +656,10 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     <div class="mf">
       <label>LOGO DU CLUB</label>
       <div style="display:flex;gap:8px;align-items:center">
-        <div id="e-logo-preview" style="width:44px;height:44px;border-radius:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;overflow:hidden">🏟</div>
+        <div id="e-logo-preview" style="width:44px;height:44px;border-radius:10px;background:rgba(28,28,28,.08);border:1px solid rgba(28,28,28,.14);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;overflow:hidden">🏟</div>
         <div style="flex:1">
           <input type="file" id="e-logo-file" accept="image/*" onchange="previewLogo('e-logo-preview','e-logo-url',this)" style="display:none">
-          <button type="button" onclick="document.getElementById('e-logo-file').click()" style="width:100%;padding:9px;background:rgba(255,255,255,.05);border:1px dashed rgba(255,255,255,.2);border-radius:8px;color:rgba(255,255,255,.6);font-size:12px;cursor:pointer;font-family:var(--font)">📁 Choisir depuis Mac / iPhone</button>
+          <button type="button" onclick="document.getElementById('e-logo-file').click()" style="width:100%;padding:9px;background:rgba(28,28,28,.07);border:1px dashed rgba(28,28,28,.28);border-radius:8px;color:var(--w2);font-size:12px;cursor:pointer;font-family:var(--font)">📁 Choisir depuis Mac / iPhone</button>
           <input type="hidden" id="e-logo-url">
         </div>
       </div>
@@ -715,7 +715,7 @@ function initFromAuth(){
   const raw = localStorage.getItem('teranga_admin_session');
   let email = null;
   if(raw){
-    try{ const s = JSON.parse(raw); email = (s && s.user && s.user.email) ? s.user.email.toLowerCase() : null; }catch(e){}
+    try{ const s = JSON.parse(raw); email = (s && s.user_email) ? s.user_email.toLowerCase() : null; }catch(e){}
   }
   const u = email ? EMAIL_ROLES[email] : null;
   if(u){
@@ -882,7 +882,7 @@ function renderLivraisons(){
       else if(apres<=COLORIS_SEUILS[col]||10) stockAlerts.push({col,needed,dispo,apres,type:'faible'});
     });
     const stockBanner=stockAlerts.length?`
-      <div style="background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.2);padding:8px 14px;font-size:11px;color:rgba(248,113,113,.9);line-height:1.6">
+      <div style="background:rgba(192,57,43,.08);border:1px solid rgba(192,57,43,.2);padding:8px 14px;font-size:11px;color:rgba(192,57,43,.9);line-height:1.6">
         ⚠️ Stock secteur après livraison : ${stockAlerts.map(a=>`<strong>${a.col}</strong> → ${a.apres} paire${a.apres>1?'s':''} ${a.type==='rupture'?'🚨':'⚠️'}`).join(' · ')}
       </div>`:'';
     return `<div class="lv-secteur">
@@ -891,8 +891,8 @@ function renderLivraisons(){
         <div class="lv-campus">${sect}</div>
         <div class="lv-count">${ventes.length} commande(s) · ${total} paires</div>
         <div style="margin-left:auto;display:flex;align-items:center;gap:10px">
-          <span style="font-size:11px;color:rgba(255,255,255,.5)">${colResume}</span>
-          <button onclick="copierRecapSecteur('${sect.replace(/'/g, String.fromCharCode(39))}')" style="padding:4px 11px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);color:#22C55E;border-radius:6px;font-size:10px;font-weight:700;cursor:pointer;white-space:nowrap">📋 Copier WhatsApp</button>
+          <span style="font-size:11px;color:var(--w2)">${colResume}</span>
+          <button onclick="copierRecapSecteur('${sect.replace(/'/g, String.fromCharCode(39))}')" style="padding:4px 11px;background:rgba(62,142,62,.1);border:1px solid rgba(62,142,62,.25);color:#3E8E3E;border-radius:6px;font-size:10px;font-weight:700;cursor:pointer;white-space:nowrap">📋 Copier WhatsApp</button>
         </div>
       </div>
       ${stockBanner}
@@ -951,10 +951,10 @@ function renderClubs(){
       <div class="cc-top">
         ${logoEl}${avEl}
         <div style="flex:1"><div class="cc-name">${c.nom}</div><div class="cc-ref">${c.referent}</div></div>
-        <button data-club-id="${c.id}" onclick="openEditClub(this.dataset.clubId)" style="padding:4px 10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.5);border-radius:6px;font-size:10px;font-weight:600;cursor:pointer;white-space:nowrap;flex-shrink:0">✏️ Modifier</button>
+        <button data-club-id="${c.id}" onclick="openEditClub(this.dataset.clubId)" style="padding:4px 10px;background:rgba(28,28,28,.08);border:1px solid rgba(28,28,28,.14);color:var(--w2);border-radius:6px;font-size:10px;font-weight:600;cursor:pointer;white-space:nowrap;flex-shrink:0">✏️ Modifier</button>
       </div>
-      ${c.is_test?'<div class="cc-badge" style="background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.3);color:var(--red)">🧪 TEST</div>':''}
-      ${c.secteur?`<div class="cc-badge">🎓 ${c.secteur}</div>`:'<div class="cc-badge" style="color:var(--ye);border-color:rgba(245,158,11,.2)">⚠ Secteur non défini</div>'}
+      ${c.is_test?'<div class="cc-badge" style="background:rgba(192,57,43,.1);border-color:rgba(192,57,43,.3);color:var(--red)">🧪 TEST</div>':''}
+      ${c.secteur?`<div class="cc-badge">🎓 ${c.secteur}</div>`:'<div class="cc-badge" style="color:var(--ye);border-color:rgba(184,134,11,.2)">⚠ Secteur non défini</div>'}
       <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px;flex-wrap:wrap">
         ${getClubStatus(c.id)}
         ${getLastContact(c.id)}
@@ -965,14 +965,14 @@ function renderClubs(){
         <div><div class="cc-sv">${s.ventes}</div><div class="cc-sl">ventes</div></div>
       </div>
       <div class="cc-status-btns" data-club-id="${c.id}" style="display:flex;gap:4px;margin-top:6px;margin-bottom:8px;flex-wrap:wrap">
-        ${Object.entries(STATUS_LABELS).map(([s,info])=>`<button class="cc-status-btn" data-status="${s}" data-club="${c.id}" onclick="setClubStatus(this.dataset.club,this.dataset.status)" style="padding:3px 9px;border-radius:20px;font-size:9px;font-weight:700;cursor:pointer;font-family:var(--font);border:1px solid rgba(255,255,255,.08);background:transparent;color:rgba(255,255,255,.3);transition:all .15s">${info.label}</button>`).join('')}
+        ${Object.entries(STATUS_LABELS).map(([s,info])=>`<button class="cc-status-btn" data-status="${s}" data-club="${c.id}" onclick="setClubStatus(this.dataset.club,this.dataset.status)" style="padding:3px 9px;border-radius:20px;font-size:9px;font-weight:700;cursor:pointer;font-family:var(--font);border:1px solid rgba(28,28,28,.11);background:transparent;color:var(--grey);transition:all .15s">${info.label}</button>`).join('')}
       </div>
       <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px">
-        <button onclick="markContacted('\${c.id}')" style="flex:1;padding:5px 8px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);color:var(--gr);border-radius:6px;font-size:10px;font-weight:700;cursor:pointer;font-family:var(--font)">📞 Marquer contacté</button>
+        <button onclick="markContacted('\${c.id}')" style="flex:1;padding:5px 8px;background:rgba(62,142,62,.1);border:1px solid rgba(62,142,62,.2);color:var(--gr);border-radius:6px;font-size:10px;font-weight:700;cursor:pointer;font-family:var(--font)">📞 Marquer contacté</button>
       </div>
       <div style="display:flex;align-items:center;gap:8px;margin-top:2px">
         <div class="cc-code">${c.id}</div>
-        ${c.pin?`<div style="background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);border-radius:5px;padding:3px 8px;font-family:var(--mono);font-size:10px;color:var(--gr);letter-spacing:2px">🔑 ${c.pin}</div><button data-id="${c.id}" data-nom="${c.nom}" data-pin="${c.pin||''}" onclick="copierAcces(this.dataset.id,this.dataset.nom,this.dataset.pin)" style="padding:3px 9px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:var(--grey2);border-radius:5px;font-size:10px;cursor:pointer;font-family:var(--font);white-space:nowrap">📋 Copier accès</button>`:'<div style="font-size:10px;color:var(--ye)">⚠ PIN non défini</div>'}
+        ${c.pin?`<div style="background:rgba(62,142,62,.1);border:1px solid rgba(62,142,62,.2);border-radius:5px;padding:3px 8px;font-family:var(--mono);font-size:10px;color:var(--gr);letter-spacing:2px">🔑 ${c.pin}</div><button data-id="${c.id}" data-nom="${c.nom}" data-pin="${c.pin||''}" onclick="copierAcces(this.dataset.id,this.dataset.nom,this.dataset.pin)" style="padding:3px 9px;background:rgba(28,28,28,.08);border:1px solid rgba(28,28,28,.14);color:var(--grey2);border-radius:5px;font-size:10px;cursor:pointer;font-family:var(--font);white-space:nowrap">📋 Copier accès</button>`:'<div style="font-size:10px;color:var(--ye)">⚠ PIN non défini</div>'}
       </div>
     </div>`;
   }).join('');
@@ -1160,7 +1160,7 @@ const COLORIS_COLORS = {
   'Bleu foncé': '#1D4ED8',
   'Rouge':      '#EF4444',
   'Bleu ciel':  '#38BFF8',
-  'Vert':       '#22C55E',
+  'Vert':       '#3E8E3E',
   'Jaune':      '#F59E0B'
 };
 
@@ -1215,16 +1215,16 @@ function renderStock() {
     const status = stockStatus(s.quantite, s.seuil_alerte);
     const pct = stockPct(s.quantite, s.seuil_alerte);
     const color = COLORIS_COLORS[s.coloris] || '#888';
-    const barColor = status === 'ok' ? '#22C55E' : status === 'warn' ? '#F59E0B' : '#EF4444';
+    const barColor = status === 'ok' ? '#3E8E3E' : status === 'warn' ? '#B8860B' : '#C0392B';
     return `<div class="stock-card ${status}">
       <div class="stock-coloris">
-        <div class="stock-dot" style="background:${color};${s.coloris==='Blanc'?'border:1px solid rgba(255,255,255,.2)':''}"></div>
+        <div class="stock-dot" style="background:${color};${s.coloris==='Blanc'?'border:1px solid rgba(28,28,28,.28)':''}"></div>
         ${s.coloris}
       </div>
       <div class="stock-qty ${status}">${s.quantite}</div>
       <div class="stock-seuil">Total réseau · ${status==='ok'?'✅ OK':status==='warn'?'⚠️ Bientôt':'🚨 RÉAPPROVISIONNER'}</div>
       <div class="stock-bar"><div class="stock-bar-fill" style="width:${pct}%;background:${barColor}"></div></div>
-      <div style="font-size:11px;color:rgba(255,255,255,.3);margin-top:4px;text-align:center">
+      <div style="font-size:11px;color:var(--grey);margin-top:4px;text-align:center">
         Somme de ${ASS.filter(x=>x.coloris===s.coloris).length} secteurs WSS
       </div>
     </div>`;
@@ -1281,7 +1281,7 @@ function renderStockConso() {
     const color = COLORIS_COLORS[col] || '#888';
     return `<div class="row">
       <div style="display:flex;align-items:center;gap:10px">
-        <div style="width:10px;height:10px;border-radius:50%;background:${color};${col==='Blanc'?'border:1px solid rgba(255,255,255,.2)':''}"></div>
+        <div style="width:10px;height:10px;border-radius:50%;background:${color};${col==='Blanc'?'border:1px solid rgba(28,28,28,.28)':''}"></div>
         <div>
           <div class="rn">${col}</div>
           <div class="rd">${encours.filter(v => Array.isArray(v.coloris) && v.coloris.some(c=>(c.color||c)===col)).length} commande(s) en attente</div>
@@ -1343,8 +1343,8 @@ function updateStockAlertsBase() {
   if (stockBand) {
     if (criticalToUse.length > 0) {
       stockBand.classList.add('on');
-      stockBand.style.background = 'rgba(239,68,68,.1)';
-      stockBand.style.borderColor = 'rgba(239,68,68,.3)';
+      stockBand.style.background = 'rgba(192,57,43,.1)';
+      stockBand.style.borderColor = 'rgba(192,57,43,.3)';
       const names = criticalToUse.map(s => `<strong>${s.coloris}</strong>`).join(', ');
       stockTxt.innerHTML = `🚨 RUPTURE RÉSEAU sur : ${names} — Commandez immédiatement`;
     } else if (alertsToUse.length > 0) {
@@ -1534,7 +1534,7 @@ function exporterPDF() {
       h1{font-size:22px;margin-bottom:4px}
       .date{color:#666;font-size:13px;margin-bottom:28px}
       .secteur{margin-bottom:32px;border:1px solid #E5E7EB;border-radius:10px;overflow:hidden}
-      .sect-head{background:#F0FDF4;border-bottom:2px solid #22C55E;padding:12px 16px;display:flex;justify-content:space-between;font-weight:700;font-size:14px;color:#166534}
+      .sect-head{background:#F0FDF4;border-bottom:2px solid #3E8E3E;padding:12px 16px;display:flex;justify-content:space-between;font-weight:700;font-size:14px;color:#166534}
       .coloris-resume{padding:10px 16px;background:#F9FAFB;border-bottom:1px solid #E5E7EB;display:flex;gap:8px;flex-wrap:wrap}
       .col-pill{background:#E5E7EB;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600}
       table{width:100%;border-collapse:collapse}
@@ -1670,7 +1670,7 @@ async function saveEditClub() {
 
 // ══ STOCK PAR SECTEUR ══
 const WSS_SECTEURS = ['Angers WSS','Annecy WSS','Bayonne WSS','Bordeaux WSS','Caen WSS','Chambéry WSS','Laval WSS','Lille WSS','Lyon WSS','Madrid WSS','Marseille WSS','Melun WSS','Montpellier WSS','Nancy WSS','Nantes WSS','Nice WSS','Paris WSS','Reims WSS','Rennes WSS','Strasbourg WSS','Toulouse WSS','Tours WSS','Vannes WSS'];
-const COLORIS_DISPLAY = {"Blanc": "#F5F5F5", "Noir": "#374151", "Bleu foncé": "#1D4ED8", "Rouge": "#EF4444", "Bleu ciel": "#38BFF8", "Vert": "#22C55E", "Jaune": "#F59E0B"};
+const COLORIS_DISPLAY = {"Blanc": "#F5F5F5", "Noir": "#374151", "Bleu foncé": "#1D4ED8", "Rouge": "#EF4444", "Bleu ciel": "#38BFF8", "Vert": "#3E8E3E", "Jaune": "#F59E0B"};
 
 function initSecteurFilter(){
   const sel=document.getElementById('filter-secteur');
@@ -1707,15 +1707,15 @@ function renderStockSecteur(){
     const hasAlert=data.some(s=>s.quantite<=s.seuil_alerte);
     if(hasAlert) alertCount++;
     html2+=`<div style="margin-bottom:20px">
-      <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;background:${hasAlert?'rgba(239,68,68,.07)':'rgba(34,197,94,.06)'};border:1px solid ${hasAlert?'rgba(239,68,68,.2)':'rgba(34,197,94,.15)'};border-radius:14px 14px 0 0;border-bottom:none">
+      <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;background:${hasAlert?'rgba(192,57,43,.07)':'rgba(62,142,62,.06)'};border:1px solid ${hasAlert?'rgba(192,57,43,.2)':'rgba(62,142,62,.15)'};border-radius:14px 14px 0 0;border-bottom:none">
         <span style="font-size:13px">🎓</span>
         <div style="font-size:13px;font-weight:700;color:${hasAlert?'var(--red)':'var(--gr)'}">${sect}</div>
-        <div style="font-size:10px;background:rgba(255,255,255,.08);padding:2px 8px;border-radius:20px;font-family:var(--mono)">${total} paires</div>
+        <div style="font-size:10px;background:rgba(28,28,28,.11);padding:2px 8px;border-radius:20px;font-family:var(--mono)">${total} paires</div>
         ${hasAlert?'<div style="font-size:10px;color:var(--red);font-weight:700;margin-left:auto">🚨 ALERTE</div>':''}
       </div>
-      <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:0 0 14px 14px;overflow:hidden">
-        <div style="display:grid;grid-template-columns:repeat(7,1fr);border-bottom:1px solid rgba(255,255,255,.06);padding:8px 12px;background:rgba(255,255,255,.03)">
-          ${['Blanc','Noir','Bleu foncé','Rouge','Bleu ciel','Vert','Jaune'].map(c=>`<div style="font-size:9px;font-weight:700;letter-spacing:1px;color:rgba(255,255,255,.35);font-family:var(--mono);text-align:center">${c.toUpperCase().substring(0,4)}</div>`).join('')}
+      <div style="background:rgba(28,28,28,.04);border:1px solid rgba(28,28,28,.10);border-radius:0 0 14px 14px;overflow:hidden">
+        <div style="display:grid;grid-template-columns:repeat(7,1fr);border-bottom:1px solid rgba(28,28,28,.08);padding:8px 12px;background:rgba(28,28,28,.04)">
+          ${['Blanc','Noir','Bleu foncé','Rouge','Bleu ciel','Vert','Jaune'].map(c=>`<div style="font-size:9px;font-weight:700;letter-spacing:1px;color:var(--grey);font-family:var(--mono);text-align:center">${c.toUpperCase().substring(0,4)}</div>`).join('')}
         </div>
         <div style="display:grid;grid-template-columns:repeat(7,1fr);padding:12px">
           ${['Blanc','Noir','Bleu foncé','Rouge','Bleu ciel','Vert','Jaune'].map(col=>{
@@ -1724,23 +1724,23 @@ function renderStockSecteur(){
             const seuil=s?s.seuil_alerte:8;
             const pct=Math.min(100,Math.round((qty/Math.max(qty,seuil*4))*100));
             const status=qty<=0?'danger':qty<=seuil?'warn':'ok';
-            const clr=status==='ok'?'#22C55E':status==='warn'?'#F59E0B':'#EF4444';
+            const clr=status==='ok'?'#3E8E3E':status==='warn'?'#B8860B':'#C0392B';
             const dotClr=COLORIS_DISPLAY[col]||'#888';
             const isWhite=col==='Blanc';
             return `<div style="text-align:center;padding:0 4px">
-              <div style="width:10px;height:10px;border-radius:50%;background:${dotClr};${isWhite?'border:1px solid rgba(255,255,255,.3)':''};margin:0 auto 6px"></div>
+              <div style="width:10px;height:10px;border-radius:50%;background:${dotClr};${isWhite?'border:1px solid rgba(28,28,28,.35)':''};margin:0 auto 6px"></div>
               <div style="font-size:18px;font-weight:900;font-family:var(--mono);color:${clr};line-height:1">${qty}</div>
-              <div style="height:3px;background:rgba(255,255,255,.08);border-radius:2px;margin:6px 2px 8px"><div style="height:100%;width:${pct}%;background:${clr};border-radius:2px"></div></div>
+              <div style="height:3px;background:rgba(28,28,28,.11);border-radius:2px;margin:6px 2px 8px"><div style="height:100%;width:${pct}%;background:${clr};border-radius:2px"></div></div>
               <div style="display:flex;align-items:center;gap:2px;justify-content:center">
-              <button onclick="quickStock('${sect.replace(/ /g,'_')}','${col.replace(/ /g,'-')}',this,-5)" style="width:20px;height:20px;border-radius:4px;background:rgba(248,113,113,.15);border:1px solid rgba(248,113,113,.2);color:var(--red);font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0">-</button>
-              <input type="number" value="${qty}" min="0" id="ss-${sect.replace(/ /g,'-')}-${col.replace(/ /g,'-')}" style="width:40px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:5px;padding:4px 2px;color:var(--w);font-size:11px;font-family:var(--mono);text-align:center;outline:none">
-              <button onclick="quickStock('${sect.replace(/ /g,'_')}','${col.replace(/ /g,'-')}',this,5)" style="width:20px;height:20px;border-radius:4px;background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.2);color:var(--gr);font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0">+</button>
+              <button onclick="quickStock('${sect.replace(/ /g,'_')}','${col.replace(/ /g,'-')}',this,-5)" style="width:20px;height:20px;border-radius:4px;background:rgba(192,57,43,.15);border:1px solid rgba(192,57,43,.2);color:var(--red);font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0">-</button>
+              <input type="number" value="${qty}" min="0" id="ss-${sect.replace(/ /g,'-')}-${col.replace(/ /g,'-')}" style="width:40px;background:rgba(28,28,28,.08);border:1px solid rgba(28,28,28,.14);border-radius:5px;padding:4px 2px;color:var(--w);font-size:11px;font-family:var(--mono);text-align:center;outline:none">
+              <button onclick="quickStock('${sect.replace(/ /g,'_')}','${col.replace(/ /g,'-')}',this,5)" style="width:20px;height:20px;border-radius:4px;background:rgba(62,142,62,.15);border:1px solid rgba(62,142,62,.2);color:var(--gr);font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0">+</button>
             </div>
             </div>`;
           }).join('')}
         </div>
-        ${currentUser&&currentUser.role==='admin'?`<div style="padding:8px 12px;border-top:1px solid rgba(255,255,255,.06);text-align:right">
-          <button onclick="saveStockSecteur('${sect.replace(/ /g,'_')}','${sect.replace(/ /g,'-')}')" style="padding:5px 14px;background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.25);color:var(--gr);border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;font-family:var(--font)">💾 Sauvegarder ${sect}</button>
+        ${currentUser&&currentUser.role==='admin'?`<div style="padding:8px 12px;border-top:1px solid rgba(28,28,28,.08);text-align:right">
+          <button onclick="saveStockSecteur('${sect.replace(/ /g,'_')}','${sect.replace(/ /g,'-')}')" style="padding:5px 14px;background:rgba(62,142,62,.12);border:1px solid rgba(62,142,62,.25);color:var(--gr);border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;font-family:var(--font)">💾 Sauvegarder ${sect}</button>
         </div>`:''}
       </div>
     </div>`;
@@ -1870,10 +1870,10 @@ const CLUB_STATUS_KEY = 'tp_club_status';
 const CLUB_CONTACT_KEY = 'tp_club_contact';
 
 const STATUS_LABELS = {
-  'actif': {label:'✅ Actif', color:'var(--gr)', bg:'rgba(34,197,94,.1)', border:'rgba(34,197,94,.2)'},
-  'relancer': {label:'⚠️ À relancer', color:'var(--ye)', bg:'rgba(251,191,36,.1)', border:'rgba(251,191,36,.2)'},
-  'nouveau': {label:'🆕 Nouveau', color:'var(--bl)', bg:'rgba(96,165,250,.1)', border:'rgba(96,165,250,.2)'},
-  'inactif': {label:'😴 Inactif', color:'var(--red)', bg:'rgba(239,68,68,.1)', border:'rgba(239,68,68,.2)'},
+  'actif': {label:'✅ Actif', color:'var(--gr)', bg:'rgba(62,142,62,.1)', border:'rgba(62,142,62,.2)'},
+  'relancer': {label:'⚠️ À relancer', color:'var(--ye)', bg:'rgba(184,134,11,.1)', border:'rgba(184,134,11,.2)'},
+  'nouveau': {label:'🆕 Nouveau', color:'var(--bl)', bg:'rgba(29,91,143,.1)', border:'rgba(29,91,143,.2)'},
+  'inactif': {label:'😴 Inactif', color:'var(--red)', bg:'rgba(192,57,43,.1)', border:'rgba(192,57,43,.2)'},
 };
 
 function getClubStatuses(){ try{return JSON.parse(localStorage.getItem(CLUB_STATUS_KEY)||'{}')}catch(e){return{}} }
@@ -1908,8 +1908,8 @@ function setClubStatus(id, status){
       btn.style.borderColor=btnInfo.border;
     } else {
       btn.style.background='transparent';
-      btn.style.color='rgba(255,255,255,.3)';
-      btn.style.borderColor='rgba(255,255,255,.08)';
+      btn.style.color='rgba(28,28,28,.35)';
+      btn.style.borderColor='rgba(28,28,28,.11)';
     }
   });
 
@@ -1930,8 +1930,8 @@ function applyStatusBtns(){
       btn.style.borderColor=info.border;
     } else {
       btn.style.background='transparent';
-      btn.style.color='rgba(255,255,255,.3)';
-      btn.style.borderColor='rgba(255,255,255,.08)';
+      btn.style.color='rgba(28,28,28,.35)';
+      btn.style.borderColor='rgba(28,28,28,.11)';
     }
   });
 }
@@ -1985,14 +1985,14 @@ function setLvTab(tab){
   const btnPdf=document.getElementById('btn-export-pdf');
   if(enc&&his){
     if(tab==='encours'){
-      enc.style.background='var(--gr)'; enc.style.color='#050810';
+      enc.style.background='var(--gr)'; enc.style.color='#FFFFFF';
       his.style.background='transparent'; his.style.color='var(--grey2)';
       if(sem) sem.style.display='none';
       if(btnCp) btnCp.style.display='';
       if(btnPdf) btnPdf.style.display='';
       document.getElementById('lv-psub').textContent='Commandes en cours, regroupées par secteur WSS';
     } else {
-      his.style.background='var(--gr)'; his.style.color='#050810';
+      his.style.background='var(--gr)'; his.style.color='#FFFFFF';
       enc.style.background='transparent'; enc.style.color='var(--grey2)';
       if(sem){ sem.style.display=''; buildSemaineFilter(); }
       if(btnCp) btnCp.style.display='none';
@@ -2053,10 +2053,10 @@ function renderLivraisonsHisto(){
   el.innerHTML=Object.entries(bySect).sort((a,b)=>a[0].localeCompare(b[0])).map(([sect,ventes])=>{
     const total=ventes.reduce((a,v)=>a+v.nb_paires,0);
     return `<div class="lv-secteur">
-      <div class="lv-head" style="background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.1)">
+      <div class="lv-head" style="background:rgba(28,28,28,.05);border-color:rgba(28,28,28,.14)">
         <span style="font-size:14px">✅</span>
         <div class="lv-campus" style="color:var(--grey2)">${sect}</div>
-        <div class="lv-count" style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.15);color:var(--grey2)">${ventes.length} livraison(s) · ${total} paires</div>
+        <div class="lv-count" style="background:rgba(28,28,28,.11);border-color:rgba(28,28,28,.20);color:var(--grey2)">${ventes.length} livraison(s) · ${total} paires</div>
       </div>
       <div class="lv-rows">
         <div class="lv-head-row"><div>JOUEUR</div><div>CLUB</div><div>COLORIS</div><div>PAIRES</div><div>MONTANT</div></div>
@@ -2167,8 +2167,8 @@ function renderStatsAdvanced(){
       {label:'Paires vendues',val:paires,sub:pct(paires,prevPaires),color:'var(--w)'},
       {label:'Commissions',val:comm.toFixed(0)+' €',sub:'reversées aux clubs',color:'var(--bl)'},
       {label:'Clubs actifs',val:clubsActifs,sub:'ce mois',color:'var(--ye)'},
-    ].map(k=>`<div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:14px">
-      <div style="font-size:10px;font-weight:700;letter-spacing:1px;color:rgba(255,255,255,.35);margin-bottom:6px">${k.label.toUpperCase()}</div>
+    ].map(k=>`<div style="background:rgba(28,28,28,.05);border:1px solid rgba(28,28,28,.10);border-radius:12px;padding:14px">
+      <div style="font-size:10px;font-weight:700;letter-spacing:1px;color:var(--grey);margin-bottom:6px">${k.label.toUpperCase()}</div>
       <div style="font-size:22px;font-weight:900;font-family:var(--mono);color:${k.color}">${k.val}</div>
       <div style="margin-top:4px">${k.sub}</div>
     </div>`).join('');
@@ -2180,12 +2180,12 @@ function renderStatsAdvanced(){
     const moisNom=now.toLocaleDateString('fr-FR',{month:'long',year:'numeric'});
     const prevNom=new Date(prevYr,prevMo,1).toLocaleDateString('fr-FR',{month:'long',year:'numeric'});
     cmp.innerHTML=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-      <div style="text-align:center;padding:12px;background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.15);border-radius:10px">
+      <div style="text-align:center;padding:12px;background:rgba(62,142,62,.06);border:1px solid rgba(62,142,62,.15);border-radius:10px">
         <div style="font-size:11px;color:var(--gr);font-weight:700;margin-bottom:8px">${moisNom.charAt(0).toUpperCase()+moisNom.slice(1)}</div>
         <div style="font-size:24px;font-weight:900;font-family:var(--mono);color:var(--gr)">${ca.toFixed(0)} €</div>
         <div style="font-size:11px;color:var(--grey);margin-top:4px">${paires} paires</div>
       </div>
-      <div style="text-align:center;padding:12px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:10px">
+      <div style="text-align:center;padding:12px;background:rgba(28,28,28,.04);border:1px solid rgba(28,28,28,.10);border-radius:10px">
         <div style="font-size:11px;color:var(--grey);font-weight:700;margin-bottom:8px">${prevNom.charAt(0).toUpperCase()+prevNom.slice(1)}</div>
         <div style="font-size:24px;font-weight:900;font-family:var(--mono)">${prevCa.toFixed(0)} €</div>
         <div style="font-size:11px;color:var(--grey);margin-top:4px">${prevPaires} paires</div>
@@ -2215,8 +2215,8 @@ function renderStatsAdvanced(){
         const h=Math.max(4,Math.round((w.ca/maxCa)*72));
         const isLast=weeks.indexOf(w)===3;
         return `<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
-          <div style="font-size:10px;font-family:var(--mono);color:${isLast?'var(--gr)':'rgba(255,255,255,.5)'}">${w.ca>0?w.ca.toFixed(0)+'€':''}</div>
-          <div style="width:100%;height:${h}px;background:${isLast?'var(--gr)':'rgba(255,255,255,.15)'};border-radius:4px 4px 0 0;transition:height .3s"></div>
+          <div style="font-size:10px;font-family:var(--mono);color:${isLast?'var(--gr)':'var(--w2)'}">${w.ca>0?w.ca.toFixed(0)+'€':''}</div>
+          <div style="width:100%;height:${h}px;background:${isLast?'var(--gr)':'rgba(28,28,28,.15)'};border-radius:4px 4px 0 0;transition:height .3s"></div>
         </div>`;
       }).join('')}
     </div>
@@ -2257,19 +2257,19 @@ function renderMessages(){
     const hasTel=v.joueur_tel&&v.joueur_tel.trim();
     const msg=genMsgJoueur(v,club.nom);
     const msgEncode=encodeURIComponent(msg);
-    return `<div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:16px;margin-bottom:12px">
+    return `<div style="background:rgba(28,28,28,.04);border:1px solid rgba(28,28,28,.10);border-radius:14px;padding:16px;margin-bottom:12px">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px">
         <div>
           <div style="font-size:14px;font-weight:700">${v.joueur_prenom} ${v.joueur_nom}</div>
-          <div style="font-size:11px;color:rgba(255,255,255,.45);margin-top:2px">${v.joueur_categorie} · ${club.nom} · ${dt} · ${col}</div>
+          <div style="font-size:11px;color:var(--grey2);margin-top:2px">${v.joueur_categorie} · ${club.nom} · ${dt} · ${col}</div>
         </div>
         <div style="display:flex;gap:6px;align-items:center">
-          ${hasTel?`<div style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;background:rgba(37,211,102,.1);border:1px solid rgba(37,211,102,.2);color:#25D366">📞 ${v.joueur_tel}</div>`:'<div style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.2);color:var(--ye)">⚠ Pas de tél</div>'}
-          <div style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;${isL?'background:rgba(34,197,94,.12);color:var(--gr);border:1px solid rgba(34,197,94,.2)':'background:rgba(251,191,36,.1);color:var(--ye);border:1px solid rgba(251,191,36,.2)'}">${isL?'✓ Livré':'⏳ En cours'}</div>
+          ${hasTel?`<div style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;background:rgba(37,211,102,.1);border:1px solid rgba(37,211,102,.2);color:#25D366">📞 ${v.joueur_tel}</div>`:'<div style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;background:rgba(184,134,11,.1);border:1px solid rgba(184,134,11,.2);color:var(--ye)">⚠ Pas de tél</div>'}
+          <div style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;${isL?'background:rgba(62,142,62,.12);color:var(--gr);border:1px solid rgba(62,142,62,.2)':'background:rgba(184,134,11,.1);color:var(--ye);border:1px solid rgba(184,134,11,.2)'}">${isL?'✓ Livré':'⏳ En cours'}</div>
         </div>
       </div>
       <!-- Aperçu message -->
-      <div style="background:rgba(0,0,0,.2);border-radius:10px;padding:12px;font-size:11px;color:rgba(255,255,255,.5);line-height:1.7;margin-bottom:10px;white-space:pre-line;max-height:120px;overflow:hidden">${msg}</div>
+      <div style="background:rgba(28,28,28,.05);border-radius:10px;padding:12px;font-size:11px;color:var(--w2);line-height:1.7;margin-bottom:10px;white-space:pre-line;max-height:120px;overflow:hidden">${msg}</div>
       <!-- Boutons -->
       <div style="display:flex;gap:8px;flex-wrap:wrap">
         <button onclick="copyMsg(${JSON.stringify(msg).replace(/'/g,'&#39;')})" style="padding:7px 14px;background:rgba(37,211,102,.12);border:1px solid rgba(37,211,102,.25);color:#25D366;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;font-family:var(--font)">📋 Copier le message</button>
