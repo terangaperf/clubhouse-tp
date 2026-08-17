@@ -813,9 +813,6 @@ input[type=password]{font-family:var(--mono)}
     <button class="land-btn primary" onclick="showConn('club')">
       🏟 Espace Club partenaire →
     </button>
-    <button class="land-btn ghost" onclick="showConn('admin')">
-      Accès administrateur
-    </button>
   </div>
 </div>
 
@@ -844,17 +841,31 @@ input[type=password]{font-family:var(--mono)}
       <div class="conn-err" id="cerr"></div>
       <button class="conn-btn" onclick="loginClub()">Se connecter →</button>
     </div>
-    <!-- Admin -->
-    <div id="block-admin" style="display:none">
-      <div class="fl"><label>IDENTIFIANT</label>
-        <input class="fi" id="aid" placeholder="mamadou" autocomplete="off">
-      </div>
-      <div class="fl"><label>MOT DE PASSE</label>
-        <input class="fi" id="apw" type="password" placeholder="••••••••">
-      </div>
-      <div class="conn-err" id="aerr"></div>
-      <button class="conn-btn" onclick="loginAdmin()">Accéder →</button>
+  </div>
+</div>
+
+<!-- ═══ CHANGEMENT CODE PIN ═══ -->
+<div class="page" id="pg-changepin-forced">
+  <div class="conn-hdr">
+    <div class="conn-back" id="cp-back" onclick="go('profil')" style="display:none">‹</div>
+    <div>
+      <div class="conn-ttl">🔒 Code PIN</div>
+      <div class="conn-sub" id="cp-forced-msg">Choisis un nouveau code PIN pour sécuriser ton club</div>
     </div>
+  </div>
+  <div class="conn-body scz">
+    <div class="fl"><label>CODE PIN ACTUEL</label>
+      <input class="fi" id="cp-old" type="password" maxlength="4" autocomplete="off" inputmode="numeric" placeholder="••••" style="letter-spacing:6px;font-size:22px;text-align:center;font-family:var(--mono)">
+    </div>
+    <div class="fl"><label>NOUVEAU CODE PIN</label>
+      <input class="fi" id="cp-new1" type="password" maxlength="4" autocomplete="off" inputmode="numeric" placeholder="••••" style="letter-spacing:6px;font-size:22px;text-align:center;font-family:var(--mono)">
+    </div>
+    <div class="fl"><label>CONFIRME LE NOUVEAU CODE PIN</label>
+      <input class="fi" id="cp-new2" type="password" maxlength="4" autocomplete="off" inputmode="numeric" placeholder="••••" style="letter-spacing:6px;font-size:22px;text-align:center;font-family:var(--mono)">
+    </div>
+    <p class="conn-hint">Choisis 4 chiffres différents de 0000. Ce code te sera demandé à chaque connexion.</p>
+    <div class="conn-err" id="pinerr"></div>
+    <button class="conn-btn" onclick="submitChangePin()">Valider →</button>
   </div>
 </div>
 
@@ -1202,7 +1213,7 @@ input[type=password]{font-family:var(--mono)}
       <div class="p-sec">
         <div class="p-sec-ttl">MON CLUB</div>
         <div class="p-row" onclick="openModal('modal-historique')"><div class="p-row-l"><div class="p-ico">📋</div>Historique des ventes</div><div class="p-row-r">›</div></div>
-        <div class="p-row"><div class="p-row-l"><div class="p-ico">🔑</div>Code PIN</div><div class="p-row-r" id="prof-sumup">••••</div></div>
+        <div class="p-row" onclick="openChangePinVoluntary()"><div class="p-row-l"><div class="p-ico">🔑</div>Code PIN</div><div class="p-row-r" id="prof-sumup">••••</div></div>
         <div class="p-row" onclick="openModal('modal-tickets')"><div class="p-row-l"><div class="p-ico">🎟</div>Mes tickets tirage</div><div class="p-row-r" id="prof-tickets">0</div></div>
         <div class="p-row" onclick="go('ranking')"><div class="p-row-l"><div class="p-ico">🏆</div>Classement national</div><div class="p-row-r">Voir →</div></div>
       </div>
@@ -1390,10 +1401,8 @@ function obSkip(){
 
 // ── CONNEXION ──
 function showConn(type){
-  document.getElementById('block-club').style.display=type==='club'?'':'none';
-  document.getElementById('block-admin').style.display=type==='admin'?'':'none';
-  document.getElementById('conn-ttl').textContent=type==='club'?'Connexion Club':'Accès Admin';
-  document.getElementById('conn-sub').textContent=type==='club'?'Référent partenaire':'Administration';
+  document.getElementById('conn-ttl').textContent='Connexion Club';
+  document.getElementById('conn-sub').textContent='Référent partenaire';
   show('pg-conn');
 }
 
@@ -1403,22 +1412,20 @@ async function loginClub(){
   if(!c){document.getElementById('cerr').textContent='❌ Entrez votre code club.';return;}
   if(!pin||pin.length<4){document.getElementById('cerr').textContent='❌ Entrez votre code PIN (4 chiffres).';return;}
   document.getElementById('cerr').textContent='⏳ Connexion...';
-  let data=null;
+  let res=null;
   try{
-    data=await supaFetch('clubs?id=eq.'+encodeURIComponent(c)+'&select=*');
+    res=await supaFetch('rpc/login_club',{method:'POST',body:JSON.stringify({p_id:c,p_pin:pin})});
   }catch(e){}
-  if(!data){
+  if(!res){
     document.getElementById('cerr').textContent='❌ Erreur de connexion — vérifiez votre connexion internet.';
     return;
   }
-  if(!data.length){document.getElementById('cerr').textContent='❌ Code club introuvable.';return;}
-  const club=data[0];
-  // Vérifier le PIN
-  if(club.pin&&club.pin!==pin){
-    document.getElementById('cerr').textContent='❌ Code PIN incorrect.';
+  if(!res.ok){
+    document.getElementById('cerr').textContent=res.error==='wrong_pin'?'❌ Code PIN incorrect.':'❌ Code club introuvable.';
     document.getElementById('pin-login').value='';
     return;
   }
+  const club=res.club;
   st.club=club; st.sumupCode=''; st.isAdmin=false;
   // Charger stats Supabase
   await loadClubStats();
@@ -1431,6 +1438,10 @@ async function loginClub(){
   document.getElementById('p-name').textContent=club.nom;
   document.getElementById('p-role').textContent='Référent : '+club.referent;
   document.getElementById('prof-sumup').textContent='••••';
+  if(club.pin_is_default){
+    openChangePinForced();
+    return;
+  }
   // Onboarding après première connexion
   try{
     const obKey='tp_onboard_'+st.club.id;
@@ -1446,14 +1457,48 @@ async function loginClub(){
   go('home');
 }
 
-async function loginAdmin(){
-  const id=document.getElementById('aid').value.trim();
-  const pw=document.getElementById('apw').value.trim();
-  if(id==='mamadou'&&pw==='teranga2026niang'){
-    st.isAdmin=true;
-    toast('✓ Connecté en mode admin','ok');
-    show('pg-home');
-  }else{document.getElementById('aerr').textContent='❌ Identifiants incorrects.';}
+function openChangePinForced(){
+  document.getElementById('cp-back').style.display='none';
+  document.getElementById('cp-forced-msg').textContent='Pour la sécurité de ton club, choisis un nouveau code PIN avant de continuer.';
+  document.getElementById('cp-old').value='';
+  document.getElementById('cp-new1').value='';
+  document.getElementById('cp-new2').value='';
+  document.getElementById('pinerr').textContent='';
+  show('pg-changepin-forced');
+}
+
+function openChangePinVoluntary(){
+  document.getElementById('cp-back').style.display='';
+  document.getElementById('cp-forced-msg').textContent='Choisis un nouveau code PIN pour sécuriser ton club.';
+  document.getElementById('cp-old').value='';
+  document.getElementById('cp-new1').value='';
+  document.getElementById('cp-new2').value='';
+  document.getElementById('pinerr').textContent='';
+  show('pg-changepin-forced');
+}
+
+async function submitChangePin(){
+  const oldPin=document.getElementById('cp-old').value.trim();
+  const p1=document.getElementById('cp-new1').value.trim();
+  const p2=document.getElementById('cp-new2').value.trim();
+  const err=document.getElementById('pinerr');
+  err.textContent='';
+  if(!/^[0-9]{4}$/.test(oldPin)){err.textContent='❌ Entre ton code PIN actuel (4 chiffres).';return;}
+  if(!/^[0-9]{4}$/.test(p1)){err.textContent='❌ Le nouveau code doit contenir exactement 4 chiffres.';return;}
+  if(p1==='0000'){err.textContent='❌ Choisis un code différent de 0000.';return;}
+  if(p1!==p2){err.textContent='❌ Les deux codes ne correspondent pas.';return;}
+  err.textContent='⏳ Enregistrement...';
+  let res=null;
+  try{
+    res=await supaFetch('rpc/change_club_pin',{method:'POST',body:JSON.stringify({p_id:st.club.id,p_old_pin:oldPin,p_new_pin:p1})});
+  }catch(e){}
+  if(res && res.ok){
+    st.club.pin_is_default=false;
+    toast('✓ Code PIN mis à jour','ok');
+    go('home');
+  } else {
+    err.textContent='❌ Code PIN actuel incorrect ou erreur réseau.';
+  }
 }
 
 function deconnexion(){
