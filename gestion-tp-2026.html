@@ -318,8 +318,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       <label class="llbl">IDENTIFIANT</label>
       <input class="linp" type="text" id="l-id" placeholder="mamadou" autocomplete="off">
       <label class="llbl">MOT DE PASSE</label>
-      <input class="linp" type="password" id="l-pw" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
-      <button class="lbtn" onclick="doLogin()">Accéder au dashboard →</button>
+      <input class="linp" type="password" id="l-pw" placeholder="••••••••">
+      <button class="lbtn">Accéder au dashboard →</button>
       <div class="lerr" id="l-err"></div>
     </div>
   </div>
@@ -707,33 +707,20 @@ async function hashPwd(str){
   return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
 }
 
-async function doLogin(){
-  const id=document.getElementById('l-id').value.trim().toLowerCase();
-  const pw=document.getElementById('l-pw').value.trim();
-  if(!id||!pw){ document.getElementById('l-err').textContent='Remplissez tous les champs'; return; }
-
-  const btn=document.getElementById("btn-login");
-  if(btn){ btn.textContent='Connexion...'; btn.disabled=true; }
-
-  try{
-    // Hash du mot de passe
-    const pwHash=await hashPwd(pw);
-
-    // Hashes précalculés des mots de passe (SHA-256)
-    const HASHES={
-      'mamadou':{h:'579610b8bfdef2909209c2305067f6ca412a367fcd7cd7be090c295d79841a63',role:'admin',name:'Mamadou'},
-      'lea':{h:'0dcc6943de452ed01c13f63ac7aaaaae14ee856e249f390540220e982482e481',role:'coord',name:'Léa'}
-    };
-
-    const user=HASHES[id];
-    if(!user||user.h!==pwHash){
-      document.getElementById('l-err').textContent='Identifiants incorrects';
-      if(btn){ btn.textContent='Accéder →'; btn.disabled=false; }
-      return;
-    }
-    currentUser={id,role:user.role,name:user.name};
-
-    // Connexion réussie
+const EMAIL_ROLES = {
+  'terangaperf@gmail.com': {role:'admin', name:'Mamadou'}
+  // Ajouter ici l'email de Léa quand son compte Supabase Auth existe, ex:
+  // 'lea@exemple.com': {role:'coord', name:'Léa'}
+};
+function initFromAuth(){
+  const raw = localStorage.getItem('teranga_admin_session');
+  let email = null;
+  if(raw){
+    try{ const s = JSON.parse(raw); email = (s && s.user && s.user.email) ? s.user.email.toLowerCase() : null; }catch(e){}
+  }
+  const u = email ? EMAIL_ROLES[email] : null;
+  if(u){
+    currentUser = {id:email, role:u.role, name:u.name};
     document.getElementById('login').style.display='none';
     document.getElementById('app').style.display='flex';
     document.getElementById('top-date').textContent=new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
@@ -742,10 +729,14 @@ async function doLogin(){
     applyRole(currentUser.role);
     loadAll();
     resetSessionTimer();
-
-  }catch(e){
-    document.getElementById('l-err').textContent='Erreur de connexion — réessayez';
-    if(btn){ btn.textContent='Accéder →'; btn.disabled=false; }
+  } else {
+    currentUser = null;
+    document.getElementById('login').style.display='flex';
+    document.getElementById('app').style.display='none';
+    const loginEl = document.getElementById('login');
+    if(loginEl && email){
+      loginEl.innerHTML = '<div style="margin?auto;text-align:center;padding:40px;font-family:sans-serif;color:#333"><p>Compte non reconnu pour l acces admin ? ' + email + '</p><p>Contacte Mamadou pour obtenir l acces.</p></div>';
+    }
   }
 }
 
@@ -761,10 +752,7 @@ function applyRole(role) {
   if(financeStats) financeStats.style.display = role === 'admin' ? '' : 'none';
 }
 function logout(){
-  currentUser = null;
-  document.getElementById('login').style.display='flex';
-  document.getElementById('app').style.display='none';
-  ['l-id','l-pw'].forEach(id=>document.getElementById(id).value='');
+  TerangaAuth.logout();
 }
 
 // DATA
@@ -2333,7 +2321,7 @@ document.getElementById('l-id').addEventListener('keydown',e=>{if(e.key==='Enter
 </script>
 </body><script>
 if (typeof SUPA_URL !== 'undefined' && typeof SUPA_KEY !== 'undefined') {
-  TerangaAuth.init({ supabaseUrl: SUPA_URL, anonKey: SUPA_KEY });
+  TerangaAuth.init({ supabaseUrl: SUPA_URL, anonKey: SUPA_KEY }, initFromAuth);
 }
 </script>
 </html>
