@@ -708,9 +708,8 @@ async function hashPwd(str){
 }
 
 const EMAIL_ROLES = {
-  'terangaperf@gmail.com': {role:'admin', name:'Mamadou'}
-  // Ajouter ici l'email de Léa quand son compte Supabase Auth existe, ex:
-  // 'lea@exemple.com': {role:'coord', name:'Léa'}
+  'terangaperf@gmail.com': {role:'admin', name:'Mamadou'},
+  'leagard.terangaperf@gmail.com': {role:'coord', name:'Léa'}
 };
 function initFromAuth(){
   const raw = localStorage.getItem('teranga_admin_session');
