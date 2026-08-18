@@ -686,15 +686,19 @@ const SUPA_URL='https://hvwgmkcsobqvpaqfqcrc.supabase.co';
 const SUPA_KEY='sb_publishable__0FnifRMiDblovr8OE4ZWw_N37Dro8W';
 
 async function supaFetch(ep,opts={}){
+  const controller=new AbortController();
+  const timeoutId=setTimeout(()=>controller.abort(),15000);
   try{
     const r=await fetch(SUPA_URL+'/rest/v1/'+ep,{
       headers:{'apikey':SUPA_KEY,'Authorization':(typeof TerangaAuth!=='undefined'?TerangaAuth.getAuthHeader():'Bearer '+SUPA_KEY),'Content-Type':'application/json','Prefer':opts.prefer||''},
-      ...opts
+      ...opts,
+      signal:controller.signal
     });
     if(!r.ok) return null;
     if(r.status===204) return true;
     return r.json();
   }catch{return null;}
+  finally{clearTimeout(timeoutId);}
 }
 
 // AUTH
@@ -1123,7 +1127,21 @@ async function saveClub(){
     if(email && !isTest){
       sendWelcomeEmail({type:'club',email,nom_contact:ref,nom_club:nom,code_club:code,pin});
     }
-  }else{toast('❌ Erreur — code déjà existant ?',true);}
+  }else{
+    // La confirmation n'est peut-être pas arrivée à temps (réseau lent / timeout) —
+    // on vérifie si le club a quand même été créé côté base avant d'annoncer une erreur.
+    const check=await supaFetch('clubs?id=eq.'+encodeURIComponent(code)+'&select=id');
+    if(check&&Array.isArray(check)&&check.length>0){
+      closeModal();
+      await loadAll();
+      toast('✓ Club "'+nom+'" ajouté (la confirmation a mis du temps à arriver)');
+      if(email && !isTest){
+        sendWelcomeEmail({type:'club',email,nom_contact:ref,nom_club:nom,code_club:code,pin});
+      }
+    }else{
+      toast('❌ Erreur — code déjà existant ?',true);
+    }
+  }
 }
 
 // ════════════════════════════════
