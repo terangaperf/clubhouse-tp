@@ -561,6 +561,7 @@ html,body{height:100%;background:var(--bg);color:var(--w);font-family:var(--font
     <div class="mf"><label>NOM DU CLUB</label><input id="m-nom" placeholder="ex. FC Hérouville"></div>
     <div class="mf"><label>CODE CLUB (identifiant unique)</label><input id="m-code" placeholder="ex. FCH-2026" style="text-transform:uppercase"></div>
     <div class="mf"><label>RÉFÉRENT (prénom nom)</label><input id="m-ref" placeholder="ex. Alexis Nolann"></div>
+    <div class="mf"><label>EMAIL DU RÉFÉRENT (optionnel) <span style="font-size:9px;color:var(--gr)">→ Email de bienvenue automatique si renseigné</span></label><input id="m-email" type="email" placeholder="ex. contact@fcherouville.fr"></div>
     <div class="mf"><label>SECTEUR WSS (campus responsable)</label>
       <select id="m-secteur">
         <option value="">Choisir un campus WSS...</option>
@@ -625,6 +626,7 @@ html,body{height:100%;background:var(--bg);color:var(--w);font-family:var(--font
     <input type="hidden" id="e-id">
     <div class="mf"><label>NOM DU CLUB</label><input id="e-nom" placeholder="Nom du club"></div>
     <div class="mf"><label>RÉFÉRENT</label><input id="e-ref" placeholder="Prénom Nom"></div>
+    <div class="mf"><label>EMAIL DU RÉFÉRENT (optionnel)</label><input id="e-email" type="email" placeholder="ex. contact@fcherouville.fr"></div>
     <div class="mf"><label>SECTEUR WSS</label>
       <select id="e-secteur">
         <option value="">Choisir un campus WSS...</option>
@@ -1076,7 +1078,7 @@ async function marquerLivre(id,btn){
 
 // AJOUTER CLUB
 function openAddClub(){
-  ['m-nom','m-code','m-ref','m-av'].forEach(id=>{
+  ['m-nom','m-code','m-ref','m-email','m-av'].forEach(id=>{
     const el=document.getElementById(id);
     if(el) el.value='';
   });
@@ -1099,16 +1101,18 @@ async function saveClub(){
   const nom=document.getElementById('m-nom').value.trim();
   const code=document.getElementById('m-code').value.trim().toUpperCase();
   const ref=document.getElementById('m-ref').value.trim();
+  const email=document.getElementById('m-email')?document.getElementById('m-email').value.trim():'';
   const secteur=document.getElementById('m-secteur').value;
   const logo_url=document.getElementById('m-logo-url').value.trim();
   const avatar=document.getElementById('m-av').value.trim().toUpperCase();
   const pin=document.getElementById('m-pin')?document.getElementById('m-pin').value.trim():'';
+  const isTest=document.getElementById('m-istest')?.checked||false;
   if(!nom||!code||!ref){toast('Nom, code et référent obligatoires',true);return;}
   const btn=document.getElementById('btn-add-club');
   btn.textContent='⏳ Enregistrement...';btn.disabled=true;
   const res=await supaFetch('clubs',{
     method:'POST',
-    body:JSON.stringify({id:code,nom,referent:ref,avatar:avatar||code.slice(0,2),secteur:secteur||null,logo_url:logo_url||null,pin:pin||null,is_test:document.getElementById('m-istest')?.checked||false}),
+    body:JSON.stringify({id:code,nom,referent:ref,email:email||null,avatar:avatar||code.slice(0,2),secteur:secteur||null,logo_url:logo_url||null,pin:pin||null,is_test:isTest}),
     prefer:'return=minimal'
   });
   btn.textContent='Ajouter le club';btn.disabled=false;
@@ -1116,7 +1120,33 @@ async function saveClub(){
     closeModal();
     await loadAll();
     toast('✓ Club "'+nom+'" ajouté avec succès');
+    if(email && !isTest){
+      sendWelcomeEmail({type:'club',email,nom_contact:ref,nom_club:nom,code_club:code,pin});
+    }
   }else{toast('❌ Erreur — code déjà existant ?',true);}
+}
+
+// ════════════════════════════════
+// EMAIL DE BIENVENUE (Resend, via Supabase Edge Function)
+// ════════════════════════════════
+// Envoi non-bloquant : si l'edge function n'est pas encore déployée ou échoue,
+// la création du compte reste valide — on log juste l'échec en console + toast discret.
+async function sendWelcomeEmail(payload){
+  try{
+    const res=await fetch(SUPA_URL+'/functions/v1/send-welcome-email',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY},
+      body:JSON.stringify(payload)
+    });
+    if(res.ok){
+      toast('✉️ Email de bienvenue envoyé à '+payload.email);
+    }else{
+      console.warn('Email de bienvenue non envoyé (edge function):',res.status,await res.text().catch(()=>''));
+      toast('⚠️ Compte créé, mais l\'email de bienvenue n\'a pas pu être envoyé',true);
+    }
+  }catch(e){
+    console.warn('Email de bienvenue — erreur réseau:',e);
+  }
 }
 
 // FILTER + NAV
@@ -1614,6 +1644,7 @@ function openEditClub(clubId) {
   document.getElementById('e-id').value = c.id;
   document.getElementById('e-nom').value = c.nom || '';
   document.getElementById('e-ref').value = c.referent || '';
+  if(document.getElementById('e-email')) document.getElementById('e-email').value = c.email || '';
   document.getElementById('e-secteur').value = c.secteur || '';
   document.getElementById('e-logo-url').value = c.logo_url || '';
   const ep = document.getElementById('e-logo-preview');
@@ -1633,6 +1664,7 @@ async function saveEditClub() {
   const id = document.getElementById('e-id').value;
   const nom = document.getElementById('e-nom').value.trim();
   const ref = document.getElementById('e-ref').value.trim();
+  const email = document.getElementById('e-email') ? document.getElementById('e-email').value.trim() : '';
   const secteur = document.getElementById('e-secteur').value;
   const logo_url = document.getElementById('e-logo-url').value.trim();
   const avatar = document.getElementById('e-av').value.trim().toUpperCase();
@@ -1648,6 +1680,7 @@ async function saveEditClub() {
     body: JSON.stringify({
       nom,
       referent: ref,
+      email: email || null,
       secteur: secteur || null,
       logo_url: logo_url || null,
       avatar: avatar || id.slice(0,2),
