@@ -696,7 +696,7 @@ async function supaFetch(ep,opts={}){
     });
     if(!r.ok) return null;
     if(r.status===204) return true;
-    return r.json();
+    try{const t=await r.text();return t?JSON.parse(t):true;}catch{return true;}
   }catch{return null;}
   finally{clearTimeout(timeoutId);}
 }
