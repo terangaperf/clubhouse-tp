@@ -2336,24 +2336,27 @@ function genMsgJoueur(v,clubNom){
   const total=v.montant||0;
   return `🧦 *TERANGA PERF — Confirmation de commande*
 
-Bonjour *${v.joueur_prenom} ${v.joueur_nom}* 👋
-Votre commande a bien été enregistrée ✅
+Salut *${v.joueur_prenom} ${v.joueur_nom}* 👋
+Ta commande a bien ete enregistree ✅
 
-▬▬▬▬▬▬▬▬▬▬▬▬▬
-📋 *Détail :*
+━━━━━━━━━━
+📋 *Detail :*
 • Coloris : ${col}
 • Montant : *${total.toFixed?total.toFixed(2).replace('.',','):total} €*
 • Club : ${clubNom}
 • Date : ${dt}
-▬▬▬▬▬▬▬▬▬▬▬▬▬
+━━━━━━━━━━
 
 📦 *Livraison* au club sous 7 jours.
 
-🎟 Vous êtes inscrit au *tirage du mois* — à gagner : des places pour un match de Ligue 1, 2 ou 3 ! 🏆⚽
+🎟️ Grace a ta commande, tu participes automatiquement au *tirage du mois* — a gagner : *2 places* pour un match de Ligue 1, *4 places* pour un match de Ligue 2, ou *6 places* pour un match de Ligue 3 !
 
-🌐 linktr.ee/terangaperf
+📲 Abonne-toi a nos reseaux pour ne rien manquer.
 
-Merci et bonne saison ⚽ *TERANGA PERF*`;
+🔗 linktr.ee/terangaperf
+
+Merci et bonne saison
+*TERANGA PERF*`;
 }
 
 function copyMsg(msg){
