@@ -90,6 +90,8 @@ html,body{height:100%;background:var(--bg);color:var(--w);font-family:var(--font
 
 #modal-edit{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:flex-end;justify-content:center;z-index:500;backdrop-filter:blur(4px)}
 #modal-edit.on{display:flex}
+  #modal-relance{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:flex-end;justify-content:center;z-index:500;backdrop-filter:blur(4px)}
+  #modal-relance.on{display:flex}
 /* LOGIN */
 #login{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:1000}
 .lbox{width:380px}
@@ -679,6 +681,18 @@ html,body{height:100%;background:var(--bg);color:var(--w);font-family:var(--font
   </div>
 </div>
 
+  <!-- MODAL RELANCE CLUB -->
+  <div id="modal-relance" onclick="if(event.target===this)closeRelanceModal()">
+      <div class="modal">
+            <div class="modal-title">Message de relance</div>div>
+            <div id="relance-body" style="background:rgba(28,28,28,.05);border-radius:10px;padding:12px;font-size:12px;color:var(--w2);line-height:1.6;white-space:pre-line;max-height:320px;overflow:auto;margin-bottom:12px"></div>div>
+            <div class="modal-actions">
+                    <button class="mabtn cancel" onclick="closeRelanceModal()">Fermer</button>button>
+                    <button class="mabtn confirm" onclick="copyRelanceMsg()">Copier le message</button>button>
+            </div>div>
+      </div>div>
+  </div>div>
+
 <div id="toast"></div>
 
 <script>
@@ -997,7 +1011,22 @@ function renderClubs(){
             'Travail, Patience, Perseverance\n' +
             signee + ', TERANGA PERF';
       try{ navigator.clipboard.writeText(msg); }catch(e){}
-      window.prompt('Message copie - relance ' + c.nom, msg);
+      const bodyEl = document.getElementById('relance-body');
+      if(bodyEl) bodyEl.textContent = msg;
+      const modalEl = document.getElementById('modal-relance');
+      if(modalEl) modalEl.classList.add('on');
+  }
+
+  function closeRelanceModal(){
+      const modalEl = document.getElementById('modal-relance');
+      if(modalEl) modalEl.classList.remove('on');
+  }
+
+  function copyRelanceMsg(){
+      const bodyEl = document.getElementById('relance-body');
+      const msg = bodyEl ? bodyEl.textContent : '';
+      try{ navigator.clipboard.writeText(msg); }catch(e){}
+      toast('Message copie !');
   }
 
 // STATS
