@@ -975,6 +975,7 @@ function renderClubs(){
       </div>
       <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px">
         <button onclick="markContacted('\${c.id}')" style="flex:1;padding:5px 8px;background:rgba(62,142,62,.1);border:1px solid rgba(62,142,62,.2);color:var(--gr);border-radius:6px;font-size:10px;font-weight:700;cursor:pointer;font-family:var(--font)">📞 Marquer contacté</button>
+                  <button onclick="relancerClub(this.dataset.id,this.dataset.nom,this.dataset.ref)" data-id="${c.id}" data-nom="${c.nom}" data-ref="${c.referent||'-'}" style="flex:1;padding:5px 8px;background:rgba(184,134,11,.1);border:1px solid rgba(184,134,11,.2);border-radius:6px;font-size:10px;font-weight:700;color:var(--ye);cursor:pointer">Relancer</button>
       </div>
       <div style="display:flex;align-items:center;gap:8px;margin-top:2px">
         <div class="cc-code">${c.id}</div>
@@ -984,6 +985,20 @@ function renderClubs(){
   }).join('');
 
   setTimeout(applyStatusBtns, 0);}
+
+  function relancerClub(id){
+      const c = AC.find(function(x){ return x.id===id; });
+      if(!c) return;
+      const signee = (typeof ME!=='undefined' && ME && ME.name) ? ME.name : 'Mamadou';
+      const msg = 'Bonjour ' + (c.referent||'') + ' \n\n' +
+            'On a remarque qu\'aucune commande n\'a ete passee recemment cote ' + c.nom + ' sur Club House.\n\n' +
+            'On voulait savoir si tout se passe bien de votre cote. On aimerait vous proposer rapidement un appel pour faire le point ensemble. On reflechit aussi a une action a mettre en place au sein du club, qui permettrait a la fois de le valoriser et de mettre en avant la marque.\n\n' +
+            'Dites-nous quel moment vous conviendrait pour qu\'on s\'appelle.\n\n' +
+            'Travail, Patience, Perseverance\n' +
+            signee + ', TERANGA PERF';
+      try{ navigator.clipboard.writeText(msg); }catch(e){}
+      window.prompt('Message copie - relance ' + c.nom, msg);
+  }
 
 // STATS
 function renderStats(){
@@ -1997,6 +2012,7 @@ function markContacted(id){
   else renderClubs();
   toast('📞 Contact enregistré pour ce club');
 }
+            <button data-club-id="${c.id}" onclick="relancerClub(this.dataset.clubId)" style="flex:1;padding:5px 8px;background:rgba(184,134,11,.1);border:1px solid rgba(184,134,11,.2);color:var(--ye);border-radius:6px;font-size:10px;font-weight:700;cursor:pointer">Relancer</button>
 
 function getClubStatus(id){
   const statuses=getClubStatuses();
