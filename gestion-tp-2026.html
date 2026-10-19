@@ -90,6 +90,8 @@ html,body{height:100%;background:var(--bg);color:var(--w);font-family:var(--font
 
 #modal-edit{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:flex-end;justify-content:center;z-index:500;backdrop-filter:blur(4px)}
 #modal-edit.on{display:flex}
+#modal-convert{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:flex-end;justify-content:center;z-index:500;backdrop-filter:blur(4px)}
+#modal-convert.on{display:flex}
   #modal-relance{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:flex-end;justify-content:center;z-index:500;backdrop-filter:blur(4px)}
   #modal-relance.on{display:flex}
 /* LOGIN */
@@ -353,6 +355,7 @@ html,body{height:100%;background:var(--bg);color:var(--w);font-family:var(--font
       <div class="nb" onclick="showSec('commandes',this)"><span class="nb-ico">📋</span>Commandes</div>
       <div class="nb" onclick="showSec('livraisons',this)"><span class="nb-ico">🚚</span>Livraisons</div>
       <div class="nb" onclick="showSec('clubs',this)"><span class="nb-ico">🏟</span>Clubs</div>
+      <div class="nb admin-only" onclick="showSec('pipeline',this)"><span class="nb-ico">🎯</span>Pipeline Club House</div>
       <div class="nb" onclick="showSec('stock',this)"><span class="nb-ico">📦</span>Stock global</div>
       <div class="nb admin-only" onclick="showSec('stock-secteur',this)"><span class="nb-ico">🗺</span>Stock secteurs</div>
       <div class="nb" onclick="showSec('messages',this)"><span class="nb-ico">💬</span>Messages WA</div>
@@ -556,6 +559,52 @@ html,body{height:100%;background:var(--bg);color:var(--w);font-family:var(--font
   </div>
 </div>
 
+<!-- PIPELINE CONVERSION -->
+<div class="sec" id="sec-pipeline">
+  <div class="ph" style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap">
+    <div><div class="ptitle">Pipeline de conversion</div><div class="psub" id="pipeline-sub">Chargement...</div></div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px;margin-bottom:28px">
+    <div style="background:var(--surf);border:1px solid var(--bd);border-radius:12px;padding:20px 22px">
+      <div style="font-size:13px;color:var(--grey2);margin-bottom:8px">Clubs ≥ 20 % non trackés</div>
+      <div style="font-family:var(--mono);font-size:28px;font-weight:500" id="pl-kpi-qualify">—</div>
+    </div>
+    <div style="background:var(--surf);border:1px solid var(--bd);border-radius:12px;padding:20px 22px">
+      <div style="font-size:13px;color:var(--grey2);margin-bottom:8px">Clubs en pipeline</div>
+      <div style="font-family:var(--mono);font-size:28px;font-weight:500" id="pl-kpi-pipeline">—</div>
+    </div>
+    <div style="background:var(--surf);border:1px solid var(--bd);border-radius:12px;padding:20px 22px">
+      <div style="font-size:13px;color:var(--grey2);margin-bottom:8px">Clubs signés</div>
+      <div style="font-family:var(--mono);font-size:28px;font-weight:500" id="pl-kpi-signe">—</div>
+    </div>
+    <div style="background:var(--surf);border:1px solid var(--bd);border-radius:12px;padding:20px 22px">
+      <div style="font-size:13px;color:var(--grey2);margin-bottom:8px">CA testing cumulé</div>
+      <div style="font-family:var(--mono);font-size:28px;font-weight:500" id="pl-kpi-ca">—</div>
+    </div>
+  </div>
+  <div style="margin-bottom:12px">
+    <div style="font-size:18px;font-weight:700;margin-bottom:4px">Clubs à qualifier</div>
+    <div style="font-size:13px;color:var(--grey2)">Taux de conversion ≥ 20 %, pas encore suivis — classés par taux décroissant.</div>
+  </div>
+  <div style="background:var(--surf);border:1px solid var(--bd);border-radius:12px;overflow:hidden;margin-bottom:32px">
+    <div style="overflow-x:auto">
+      <div style="min-width:900px">
+        <div style="display:grid;grid-template-columns:minmax(220px,2.4fr) 110px 160px 90px 140px 170px;gap:8px;padding:12px 20px;background:var(--surf3);font-size:12px;color:var(--grey2);font-weight:500">
+          <div>Club</div><div>Taux</div><div>Testeurs → acheteurs</div><div>CA</div><div>Dernière session</div><div></div>
+        </div>
+        <div id="pl-qualify-body"><div class="spin"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>
+      </div>
+    </div>
+  </div>
+  <div style="margin-bottom:12px">
+    <div style="font-size:18px;font-weight:700;margin-bottom:4px">Pipeline en cours</div>
+    <div style="font-size:13px;color:var(--grey2)">Change l'étape directement depuis chaque carte.</div>
+  </div>
+  <div id="pl-kanban" style="display:flex;gap:16px;overflow-x:auto;padding-bottom:8px">
+    <div class="spin"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+  </div>
+</div>
+
 <!-- MODAL AJOUTER CLUB -->
 <div id="modal-overlay" onclick="if(event.target===this)closeModal()">
   <div class="modal">
@@ -681,7 +730,53 @@ html,body{height:100%;background:var(--bg);color:var(--w);font-family:var(--font
   </div>
 </div>
 
-  <!-- MODAL RELANCE CLUB -->
+  <!-- MODAL CONVERTIR EN CLUB -->
+<div id="modal-convert" onclick="if(event.target===this)closeConvertModal()">
+  <div class="modal">
+    <div class="modal-title">Convertir en club Club House</div>
+    <div class="mf"><label>CLUB</label><input id="pc-nom" disabled style="opacity:.7"></div>
+    <div class="mf"><label>CODE CLUB (identifiant unique)</label><input id="pc-code" placeholder="ex. LMFC-2026" style="text-transform:uppercase"></div>
+    <div class="mf"><label>RÉFÉRENT (prénom nom)</label><input id="pc-ref" placeholder="ex. Alexis Nolann"></div>
+    <div class="mf"><label>TÉLÉPHONE DU RÉFÉRENT (pour toi, non enregistré)</label><input id="pc-tel" placeholder="ex. 06 12 34 56 78"></div>
+    <div class="mf"><label>EMAIL DU RÉFÉRENT (optionnel)</label><input id="pc-email" type="email" placeholder="ex. contact@club.fr"></div>
+    <div class="mf"><label>SECTEUR WSS (campus responsable)</label>
+      <select id="pc-secteur">
+        <option value="">Choisir un campus WSS...</option>
+        <option value="Angers WSS">Angers WSS</option>
+        <option value="Annecy WSS">Annecy WSS</option>
+        <option value="Bayonne WSS">Bayonne WSS</option>
+        <option value="Bordeaux WSS">Bordeaux WSS</option>
+        <option value="Caen WSS">Caen WSS</option>
+        <option value="Chambéry WSS">Chambéry WSS</option>
+        <option value="Laval WSS">Laval WSS</option>
+        <option value="Lille WSS">Lille WSS</option>
+        <option value="Lyon WSS">Lyon WSS</option>
+        <option value="Madrid WSS">Madrid WSS</option>
+        <option value="Marseille WSS">Marseille WSS</option>
+        <option value="Melun WSS">Melun WSS</option>
+        <option value="Montpellier WSS">Montpellier WSS</option>
+        <option value="Nancy WSS">Nancy WSS</option>
+        <option value="Nantes WSS">Nantes WSS</option>
+        <option value="Nice WSS">Nice WSS</option>
+        <option value="Paris WSS">Paris WSS</option>
+        <option value="Reims WSS">Reims WSS</option>
+        <option value="Rennes WSS">Rennes WSS</option>
+        <option value="Strasbourg WSS">Strasbourg WSS</option>
+        <option value="Toulouse WSS">Toulouse WSS</option>
+        <option value="Tours WSS">Tours WSS</option>
+        <option value="Vannes WSS">Vannes WSS</option>
+      </select>
+    </div>
+    <div class="mf"><label>AVATAR (2 lettres si pas de logo)</label><input id="pc-av" maxlength="2" style="text-transform:uppercase;width:70px"></div>
+    <div class="mf"><label>CODE PIN (4 chiffres)</label><input id="pc-pin" maxlength="4" placeholder="ex. 4821"></div>
+    <div class="modal-actions">
+      <button class="tbtn" onclick="closeConvertModal()" style="flex:1">Annuler</button>
+      <button class="tbtn g" id="btn-convert-club" onclick="saveConvertClub()" style="flex:1">Créer le compte club</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL RELANCE CLUB -->
   <div id="modal-relance" onclick="if(event.target===this)closeRelanceModal()">
       <div class="modal">
             <div class="modal-title">Message de relance</div>
@@ -1240,6 +1335,7 @@ function showSec(name,item){
   if(name==='commandes') renderCommandes();
   if(name==='stats'){ renderStats(); renderStatsAdvanced(); }
   if(name==='messages') renderMessages();
+  if(name==='pipeline') renderPipeline();
 }
 
 // TOAST
@@ -1248,6 +1344,222 @@ function toast(msg,err=false){
   t.textContent=msg;t.className='on'+(err?' err':'');
   setTimeout(()=>t.className='',3000);
 }
+
+// ══════════════════════════════════════
+// PIPELINE CONVERSION CLUB HOUSE
+// ══════════════════════════════════════
+let PL_PIPELINE = [];
+let PL_SESSIONS_BY_ID = {};
+let PL_CONVERT_ID = null;
+const PL_STAGES = [
+  {key:'a_contacter', label:'A contacter'},
+  {key:'contacte',    label:'Contacte'},
+  {key:'propose',     label:'Propose'},
+  {key:'signe',       label:'Signe'},
+  {key:'perdu',       label:'Perdu'}
+];
+
+function plEsc(s){
+  return String(s==null?'':s).replace(/[&<>"']/g, function(c){
+    return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c];
+  });
+}
+function plFmtDate(d){
+  if(!d) return '—';
+  const parts = String(d).slice(0,10).split('-');
+  return parts.length===3 ? (parts[2]+'/'+parts[1]+'/'+parts[0]) : String(d);
+}
+
+async function renderPipeline(){
+  const sub = document.getElementById('pipeline-sub');
+  const sessions = await supaFetch('sessions_testing?select=id,club,nb_testeurs,nb_acheteurs,ca,date_session,annulee&annulee=is.false&limit=3000');
+  const pipeline = await supaFetch('clubhouse_pipeline?select=*&order=created_at.desc');
+  const clubsList = await supaFetch('clubs?select=nom');
+  if(!sessions || !pipeline || !clubsList){
+    if(sub) sub.textContent = 'Erreur de chargement.';
+    toast('Erreur de chargement du pipeline', true);
+    return;
+  }
+  PL_PIPELINE = pipeline;
+  PL_SESSIONS_BY_ID = {};
+  sessions.forEach(function(s){ PL_SESSIONS_BY_ID[String(s.id)] = s; });
+
+  const existingClubNames = {};
+  clubsList.forEach(function(c){ existingClubNames[(c.nom||'').trim().toLowerCase()] = true; });
+
+  const pipelineClubNames = {};
+  pipeline.forEach(function(p){
+    const sess = PL_SESSIONS_BY_ID[String(p.session_id)];
+    if(sess && sess.club) pipelineClubNames[sess.club.trim().toLowerCase()] = true;
+  });
+
+  const agg = {};
+  sessions.forEach(function(s){
+    const key = (s.club||'').trim();
+    if(!key) return;
+    if(!agg[key]) agg[key] = {nom:key, testeurs:0, acheteurs:0, ca:0, derniere:null, bestSessionId:s.id};
+    agg[key].testeurs += (s.nb_testeurs||0);
+    agg[key].acheteurs += (s.nb_acheteurs||0);
+    agg[key].ca += (s.ca||0);
+    if(!agg[key].derniere || String(s.date_session) > String(agg[key].derniere)){
+      agg[key].derniere = s.date_session;
+      agg[key].bestSessionId = s.id;
+    }
+  });
+
+  let qualify = Object.values(agg).filter(function(c){ return c.testeurs>=5; });
+  qualify = qualify.map(function(c){ c.taux = c.testeurs ? (c.acheteurs/c.testeurs*100) : 0; return c; });
+  qualify = qualify.filter(function(c){ return c.taux>=20; });
+  qualify = qualify.filter(function(c){ return !pipelineClubNames[c.nom.toLowerCase()]; });
+  qualify = qualify.filter(function(c){ return !existingClubNames[c.nom.toLowerCase()]; });
+  qualify.sort(function(a,b){ return b.taux-a.taux; });
+
+  if(sub) sub.textContent = qualify.length+' club(s) a qualifier · '+pipeline.length+' en pipeline';
+
+  document.getElementById('pl-kpi-qualify').textContent = qualify.length;
+  document.getElementById('pl-kpi-pipeline').textContent = pipeline.length;
+  document.getElementById('pl-kpi-signe').textContent = pipeline.filter(function(p){return p.statut==='signe';}).length;
+  const caQualify = qualify.reduce(function(s,c){return s+(c.ca||0);},0);
+  const caPipeline = pipeline.reduce(function(s,p){ const sess=PL_SESSIONS_BY_ID[String(p.session_id)]; return s+(sess?(sess.ca||0):0); },0);
+  document.getElementById('pl-kpi-ca').textContent = (caQualify+caPipeline).toLocaleString('fr-FR')+' €';
+
+  const qBody = document.getElementById('pl-qualify-body');
+  if(qualify.length){
+    qBody.innerHTML = qualify.map(function(c){
+      const tier = c.taux>=50;
+      const bg = tier ? 'rgba(62,142,62,.12)' : 'rgba(184,134,11,.14)';
+      const fg = tier ? 'var(--gr)' : 'var(--ye)';
+      const tauxLabel = c.taux.toFixed(1).replace(/\.0$/,'');
+      const safeNom = plEsc(c.nom).replace(/'/g,"\\'");
+      return '<div style="display:grid;grid-template-columns:minmax(220px,2.4fr) 110px 160px 90px 140px 170px;align-items:center;gap:8px;padding:12px 20px;border-top:1px solid var(--bd)">'
+        + '<div style="font-size:14px;font-weight:500">'+plEsc(c.nom)+'</div>'
+        + '<div><span style="display:inline-block;font-family:var(--mono);font-size:13px;font-weight:500;padding:3px 10px;border-radius:999px;background:'+bg+';color:'+fg+'">'+tauxLabel+' %</span></div>'
+        + '<div style="font-family:var(--mono);font-size:13px;color:var(--w2)">'+c.acheteurs+' / '+c.testeurs+'</div>'
+        + '<div style="font-family:var(--mono);font-size:13px;color:var(--w2)">'+c.ca+' €</div>'
+        + '<div style="font-family:var(--mono);font-size:13px;color:var(--grey2)">'+plFmtDate(c.derniere)+'</div>'
+        + '<div style="text-align:right"><button type="button" class="tbtn g" style="height:36px" onclick="addToPipeline(\''+c.bestSessionId+'\',\''+safeNom+'\')">+ Ajouter au pipeline</button></div>'
+        + '</div>';
+    }).join('');
+  } else {
+    qBody.innerHTML = '<div style="padding:24px;text-align:center;color:var(--grey2);font-size:13px">Aucun club a qualifier pour l\'instant.</div>';
+  }
+
+  const kanbanEl = document.getElementById('pl-kanban');
+  kanbanEl.innerHTML = PL_STAGES.map(function(st){
+    const items = pipeline.filter(function(p){ return p.statut===st.key; });
+    const cards = items.map(function(p){
+      const sess = PL_SESSIONS_BY_ID[String(p.session_id)];
+      const nom = sess ? sess.club : '[Session introuvable]';
+      const ratio = sess ? (sess.nb_acheteurs+' / '+sess.nb_testeurs) : '—';
+      const convertBtn = st.key==='signe'
+        ? '<button type="button" class="tbtn g" style="height:36px" onclick="openConvertModal(\''+p.id+'\')">Convertir en club</button>'
+        : '';
+      let options = '';
+      PL_STAGES.forEach(function(s2){
+        options += '<option value="'+s2.key+'"'+(s2.key===p.statut?' selected':'')+'>'+s2.label+'</option>';
+      });
+      return '<div style="background:var(--surf);border:1px solid var(--bd);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:8px;margin-bottom:12px">'
+        + '<div style="font-size:14px;font-weight:600">'+plEsc(nom)+'</div>'
+        + '<div style="font-family:var(--mono);font-size:12px;color:var(--grey2)">Session du '+plFmtDate(sess?sess.date_session:null)+'</div>'
+        + '<div style="font-size:12px;color:var(--w2)">'+ratio+' testeurs convertis</div>'
+        + '<div style="font-size:12px;color:var(--grey2);border-top:1px solid var(--bd);padding-top:8px">Referent : '+(p.president_nom?plEsc(p.president_nom):'—')+(p.president_tel?(' · '+plEsc(p.president_tel)):'')+'</div>'
+        + '<div style="display:flex;gap:8px;align-items:center">'
+        + '<select onchange="updatePipelineStatut(\''+p.id+'\', this.value)" style="flex:1;padding:6px 8px;background:rgba(28,28,28,.07);border:1px solid rgba(28,28,28,.14);border-radius:8px;color:var(--w);font-size:11px;font-family:var(--font);outline:none">'
+        + options
+        + '</select>'
+        + convertBtn
+        + '</div>'
+        + '</div>';
+    }).join('');
+    const body = items.length ? cards : '<div style="border:1px dashed var(--bd2);border-radius:10px;padding:24px 14px;text-align:center;color:var(--grey2);font-size:13px">Aucun club pour l\'instant</div>';
+    return '<div style="display:flex;flex-direction:column;gap:12px;min-width:230px;flex:none">'
+      + '<div style="display:flex;align-items:center;justify-content:space-between">'
+      + '<div style="font-size:14px;font-weight:600">'+st.label+'</div>'
+      + '<div style="font-family:var(--mono);font-size:12px;color:var(--grey2);background:var(--surf3);border-radius:999px;padding:2px 10px">'+items.length+'</div>'
+      + '</div>'
+      + body
+      + '</div>';
+  }).join('');
+}
+
+async function addToPipeline(sessionId, clubNom){
+  const res = await supaFetch('clubhouse_pipeline', {
+    method:'POST',
+    body: JSON.stringify({session_id:String(sessionId), statut:'a_contacter'}),
+    prefer:'return=minimal'
+  });
+  if(res!==null){
+    toast('✓ '+clubNom+' ajoute au pipeline');
+    renderPipeline();
+  } else {
+    toast("Erreur lors de l'ajout au pipeline", true);
+  }
+}
+
+async function updatePipelineStatut(id, statut){
+  const body = {statut:statut};
+  if(statut==='signe') body.signe_le = new Date().toISOString();
+  const res = await supaFetch('clubhouse_pipeline?id=eq.'+id, {
+    method:'PATCH',
+    body: JSON.stringify(body),
+    prefer:'return=minimal'
+  });
+  if(res!==null){ toast('Statut mis a jour'); renderPipeline(); }
+  else { toast('Erreur de mise a jour', true); }
+}
+
+function openConvertModal(pipelineId){
+  const p = PL_PIPELINE.find(function(x){ return String(x.id)===String(pipelineId); });
+  if(!p){ toast('Fiche pipeline introuvable', true); return; }
+  const sess = PL_SESSIONS_BY_ID[String(p.session_id)];
+  const nom = sess ? sess.club : '';
+  PL_CONVERT_ID = p.id;
+  document.getElementById('pc-nom').value = nom;
+  document.getElementById('pc-code').value = '';
+  document.getElementById('pc-ref').value = p.president_nom || '';
+  document.getElementById('pc-tel').value = p.president_tel || '';
+  document.getElementById('pc-email').value = '';
+  document.getElementById('pc-secteur').value = '';
+  document.getElementById('pc-av').value = nom ? nom.slice(0,2).toUpperCase() : '';
+  document.getElementById('pc-pin').value = '';
+  document.getElementById('modal-convert').classList.add('on');
+}
+function closeConvertModal(){ document.getElementById('modal-convert').classList.remove('on'); }
+
+async function saveConvertClub(){
+  if(!PL_CONVERT_ID) return;
+  const nom = document.getElementById('pc-nom').value.trim();
+  const code = document.getElementById('pc-code').value.trim().toUpperCase();
+  const ref = document.getElementById('pc-ref').value.trim();
+  const email = document.getElementById('pc-email').value.trim();
+  const secteur = document.getElementById('pc-secteur').value;
+  const avatar = document.getElementById('pc-av').value.trim().toUpperCase();
+  const pin = document.getElementById('pc-pin').value.trim();
+  if(!nom || !code || !ref){ toast('Nom, code et referent obligatoires', true); return; }
+  const btn = document.getElementById('btn-convert-club');
+  btn.textContent='⏳ Creation...'; btn.disabled=true;
+  const res = await supaFetch('clubs', {
+    method:'POST',
+    body: JSON.stringify({id:code, nom:nom, referent:ref, email: email||null, avatar: avatar||code.slice(0,2), secteur: secteur||null, logo_url:null, pin: pin||null, is_test:false}),
+    prefer:'return=minimal'
+  });
+  if(res!==null){
+    await supaFetch('clubhouse_pipeline?id=eq.'+PL_CONVERT_ID, {
+      method:'PATCH',
+      body: JSON.stringify({statut:'signe', signe_le:new Date().toISOString()}),
+      prefer:'return=minimal'
+    });
+    btn.textContent='Creer le compte club'; btn.disabled=false;
+    closeConvertModal();
+    toast('✓ Compte Club House cree pour "'+nom+'"');
+    renderPipeline();
+    if(typeof loadAll==='function') loadAll();
+  } else {
+    btn.textContent='Creer le compte club'; btn.disabled=false;
+    toast('Erreur lors de la creation du compte', true);
+  }
+}
+
 
 
 // ══════════════════════════════════════
