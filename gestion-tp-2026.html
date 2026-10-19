@@ -699,16 +699,25 @@ html,body{height:100%;background:var(--bg);color:var(--w);font-family:var(--font
 const SUPA_URL='https://hvwgmkcsobqvpaqfqcrc.supabase.co';
 const SUPA_KEY='sb_publishable__0FnifRMiDblovr8OE4ZWw_N37Dro8W';
 
+function supaAlerte(s){
+  if(s!==401&&s!==403) return;
+  if(document.getElementById('supa-alerte')) return;
+  const d=document.createElement('div'); d.id='supa-alerte';
+  d.style.cssText='position:fixed;top:0;left:0;right:0;z-index:99999;background:#b3261e;color:#fff;padding:10px 16px;font:600 13px system-ui,sans-serif;text-align:center';
+  d.innerHTML='⚠️ Session expirée : les données affichées ne sont plus à jour. <button style="margin-left:10px;padding:4px 10px;border-radius:6px;border:0;font-weight:700;cursor:pointer" onclick="TerangaAuth.logout()">Se reconnecter</button>';
+  document.body.appendChild(d);
+}
 async function supaFetch(ep,opts={}){
   const controller=new AbortController();
   const timeoutId=setTimeout(()=>controller.abort(),15000);
   try{
+    if(typeof TerangaAuth!=='undefined'&&TerangaAuth.ensureFresh) await TerangaAuth.ensureFresh();
     const r=await fetch(SUPA_URL+'/rest/v1/'+ep,{
       headers:{'apikey':SUPA_KEY,'Authorization':(typeof TerangaAuth!=='undefined'?TerangaAuth.getAuthHeader():'Bearer '+SUPA_KEY),'Content-Type':'application/json','Prefer':opts.prefer||''},
       ...opts,
       signal:controller.signal
     });
-    if(!r.ok) return null;
+    if(!r.ok){ supaAlerte(r.status); return null; }
     if(r.status===204) return true;
     try{const t=await r.text();return t?JSON.parse(t):true;}catch{return true;}
   }catch{return null;}
@@ -783,7 +792,7 @@ const COLORIS_SEUILS={'Blanc':20,'Noir':15,'Rouge':8,'Bleu foncé':8,'Vert':8,'J
 async function loadAll(){
   const [v,c,s,ss]=await Promise.all([
     supaFetch('ventes?select=*&order=created_at.desc'),
-    supaFetch('clubs?select=*'),
+    supaFetch('clubs?select=id,nom,referent,avatar,sumup_code,created_at,secteur,logo_url,is_test,email'),
     supaFetch('stock?select=*&order=coloris'),
     supaFetch('stock_secteur?select=*&order=secteur,coloris')
   ]);
@@ -1746,7 +1755,7 @@ async function saveEditClub() {
       secteur: secteur || null,
       logo_url: logo_url || null,
       avatar: avatar || id.slice(0,2),
-      pin: pin || null
+      ...(pin ? { pin: pin } : {})
     }),
     prefer: 'return=minimal'
   });

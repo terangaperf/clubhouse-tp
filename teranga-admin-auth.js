@@ -104,10 +104,36 @@ const TerangaAuth = (() => {
                              });
                        }
 
-                       function init(opts, onReady) {
+                       let _refreshing = null;
+  async function ensureFresh() {
+    const s = loadSession();
+    if (!s || !s.refresh_token) return false;
+    if ((s.expires_at || 0) * 1000 - Date.now() > 90000) return true;
+    if (_refreshing) return _refreshing;
+    _refreshing = (async () => {
+      try {
+        const res = await fetch(config.supabaseUrl + '/auth/v1/token?grant_type=refresh_token', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'apikey': config.anonKey },
+          body: JSON.stringify({ refresh_token: s.refresh_token })
+        });
+        if (!res.ok) return false;
+        const d = await res.json();
+        saveSession({ access_token: d.access_token, refresh_token: d.refresh_token, expires_at: d.expires_at, user_email: (d.user && d.user.email) || s.user_email });
+        return true;
+      } catch (e) { return false; }
+      finally { _refreshing = null; }
+    })();
+    return _refreshing;
+  }
+  setInterval(() => { if (config.anonKey) ensureFresh(); }, 60000);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden && config.anonKey) ensureFresh(); });
+
+  async function init(opts, onReady) {
                              config = Object.assign({}, config, opts);
-                             if (!isLoggedIn()) {
-                                     document.documentElement.style.visibility = 'hidden';
+                             if (!isLoggedIn()) await ensureFresh();
+  if (!isLoggedIn()) {
+    document.documentElement.style.visibility = 'hidden';
                                      renderLoginScreen(() => {
                                                document.documentElement.style.visibility = 'visible';
                                                if (typeof onReady === 'function') onReady();
@@ -117,5 +143,5 @@ const TerangaAuth = (() => {
                              }
                        }
 
-                       return { init: init, login: login, logout: logout, isLoggedIn: isLoggedIn, getAuthHeader: getAuthHeader };
+                       return { init: init, login: login, logout: logout, isLoggedIn: isLoggedIn, getAuthHeader: getAuthHeader, ensureFresh: ensureFresh };
 })();
