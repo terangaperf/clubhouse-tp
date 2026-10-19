@@ -1466,7 +1466,7 @@ async function loginClub(){
   await loadClubStats();
   // Mettre à jour topbar
   const av=club.avatar||club.nom.substring(0,2).toUpperCase();
-  document.getElementById('tb-av').textContent=av;
+  (function(){var _el=document.getElementById('tb-av');if(club.logo_url){_el.innerHTML='<img src="'+club.logo_url+'" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:inherit">';}else{_el.textContent=av;}})();
   document.getElementById('tb-club').textContent=club.nom;
   document.getElementById('tb-ref').textContent='Référent : '+club.referent+(club.secteur?' · '+club.secteur:'');
   document.getElementById('pav').textContent=av;
