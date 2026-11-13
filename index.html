@@ -801,6 +801,71 @@ body{font-variant-numeric:tabular-nums}
 .stp i.done{border-color:var(--gold);color:var(--gold)}
 .stp i.on{background:var(--gold);border-color:var(--gold);color:var(--ink)}
 .stp b{width:10px;height:1.5px;background:rgba(255,255,255,.25)}
+
+/* ═══ Responsive : téléphone = plein écran, ordinateur = vraie mise en page large ═══ */
+.nt-ic{position:relative;display:flex}
+.nt-badge{position:absolute;top:-5px;right:-9px;min-width:16px;height:16px;padding:0 4px;border-radius:9px;background:var(--red);color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;line-height:1}
+.suc-wrap{overflow-y:auto;justify-content:safe center}
+.suc-qr{width:100%;background:#fff;border-radius:var(--r3);padding:12px 10px;margin-bottom:14px;color:var(--t)}
+.suc-qr-t{font-size:12px;font-weight:800;margin-bottom:8px}
+.suc-qr-row{display:flex;gap:10px;justify-content:center}
+.suc-qr-it{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;max-width:150px}
+.suc-qr-it img{width:100%;max-width:120px;aspect-ratio:1;border-radius:8px;background:#fff}
+.suc-qr-l{font-size:10px;color:var(--t2);line-height:1.35}
+.suc-qr-l strong{color:var(--t);font-size:11px}
+/* Distribution */
+.dist-wrap{padding:14px;display:flex;flex-direction:column;gap:12px}
+.dist-sum{background:var(--ink);color:#fff;border-radius:var(--r2);padding:16px;display:flex;align-items:center;gap:14px}
+.dist-sum .big{font-family:var(--disp);font-size:40px;color:var(--gold);line-height:1;letter-spacing:.5px}
+.dist-sum .tx{font-size:12px;color:rgba(255,255,255,.7);line-height:1.45}
+.dist-sum .tx strong{color:#fff}
+.dist-seg{display:flex;gap:6px;background:var(--surf3);padding:4px;border-radius:var(--r3)}
+.dist-seg button{flex:1;padding:10px 8px;border:none;border-radius:var(--r4);background:transparent;font-family:var(--font);font-size:13px;font-weight:700;color:var(--t2);cursor:pointer}
+.dist-seg button.on{background:var(--surf);color:var(--t);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.dist-seg button span{font-size:11px;font-weight:800;margin-left:4px;color:var(--gr)}
+.dist-day{font-size:11px;font-weight:800;letter-spacing:1.4px;color:var(--gr);margin:8px 0 2px;text-transform:uppercase}
+.dist-card{background:var(--surf);border:1px solid var(--bd);border-radius:var(--r2);padding:12px 14px;display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.dist-av{width:40px;height:40px;border-radius:50%;background:var(--gr-g);border:1px solid var(--gr-b);color:var(--gr);display:flex;align-items:center;justify-content:center;font-family:var(--disp);font-size:15px;flex-shrink:0}
+.dist-main{flex:1;min-width:0}
+.dist-n{font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dist-d{font-size:11px;color:var(--t2);margin-top:2px}
+.dist-dots{display:flex;gap:4px;margin-top:6px;flex-wrap:wrap;align-items:center}
+.dist-dot{width:14px;height:14px;border-radius:50%;border:1px solid rgba(0,0,0,.25)}
+.dist-tag{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;margin-left:4px;background:var(--surf3);color:var(--t2)}
+.dist-tag.ok{background:var(--gr-g);color:var(--gr)}
+.dist-btn{border:none;border-radius:var(--r3);background:var(--ink);color:var(--gold);font-family:var(--font);font-weight:800;font-size:13px;padding:12px 14px;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:all .15s}
+.dist-btn.confirm{background:var(--gold);color:var(--ink)}
+.dist-undo{background:none;border:none;color:var(--t3);font-size:11px;text-decoration:underline;cursor:pointer;font-family:var(--font);flex-shrink:0}
+.dist-empty{text-align:center;color:var(--t3);font-size:13px;padding:28px 10px;line-height:1.6}
+
+/* Tablette : colonne centrée plein écran (plus de maquette de téléphone) */
+@media(min-width:440px){
+  body{background:var(--bg);display:block}
+  .shell{max-width:560px;height:100vh;height:100dvh;border-radius:0;box-shadow:0 0 0 1px var(--bd)}
+}
+/* Ordinateur */
+@media(min-width:900px){
+  body{background:#E9E5DA}
+  .shell{max-width:1120px;height:100vh;height:100dvh;border-radius:0;box-shadow:0 0 0 1px var(--bd),0 0 60px rgba(0,0,0,.08)}
+  /* la navigation passe en haut, en onglets */
+  .page>.nav{order:-1;border-top:none;border-bottom:1px solid var(--bd);justify-content:center;gap:6px;padding:8px 16px}
+  .page>.nav .nt{flex:0 0 auto;flex-direction:row;gap:8px;padding:10px 20px;font-size:13px}
+  .page>.nav .nt svg{width:20px;height:20px}
+  .nt:hover{background:var(--surf3)}
+  /* contenu centré et lisible */
+  .home-body,.dist-wrap,.pl-body,.choix-body,.p-list,.conn-body{width:100%;max-width:760px;margin-left:auto;margin-right:auto}
+  .hero{padding-left:max(20px,calc((100% - 760px)/2 + 20px));padding-right:max(20px,calc((100% - 760px)/2 + 20px))}
+  .cat-grid{grid-template-columns:repeat(auto-fill,minmax(190px,1fr));max-width:980px;margin:0 auto;gap:14px;padding:10px 18px 24px}
+  .offer-strip{max-width:944px;margin-left:auto;margin-right:auto}
+  #cat-player-hint{max-width:944px;margin-left:auto!important;margin-right:auto!important}
+  .p-hero{padding-left:max(20px,calc((100% - 760px)/2 + 20px));padding-right:max(20px,calc((100% - 760px)/2 + 20px))}
+  .suc-wrap{padding:40px}
+  .suc-wrap>*{max-width:460px}
+  .page{animation:none}
+  .pi{aspect-ratio:4/3}
+  .pi img{object-position:center 30%}
+  .dist-card:hover,.order-row:hover{border-color:var(--gr-b)}
+}
 </style>
 </head>
 <body>
@@ -917,6 +982,7 @@ body{font-variant-numeric:tabular-nums}
       <span style="font-size:16px;font-weight:900">⚡ Nouvelle vente</span>
       <span style="font-size:11px;font-weight:500;opacity:.65">Coloris → Joueur → Paiement · 30 sec</span>
     </button>
+    <div id="home-dist" style="display:none"></div>
     <div class="sec-ttl" style="margin-top:20px">TIRAGE DU MOIS</div>
     <div class="tirage-card">
       <div class="tirage-ico">🎟</div>
@@ -935,9 +1001,10 @@ body{font-variant-numeric:tabular-nums}
     </div>
   </div>
   <div class="nav">
-    <button class="nt on" id="n-home" onclick="go('home')"><svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>Accueil</button>
-    <button class="nt" id="n-catalogue" onclick="go('catalogue')"><svg viewBox="0 0 24 24"><path d="M6 7h12l-1 13H7L6 7z"/><path d="M9 7a3 3 0 016 0"/></svg>Vendre</button>
-    <button class="nt" id="n-profile" onclick="go('profile')"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg>Mon club</button>
+    <button class="nt on" id="n-home" onclick="go('home')"><span class="nt-ic"><svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg></span>Accueil</button>
+    <button class="nt" id="n-catalogue" onclick="go('catalogue')"><span class="nt-ic"><svg viewBox="0 0 24 24"><path d="M6 7h12l-1 13H7L6 7z"/><path d="M9 7a3 3 0 016 0"/></svg></span>Vendre</button>
+    <button class="nt" id="n-distrib" onclick="go('distrib')"><span class="nt-ic"><svg viewBox="0 0 24 24"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/><path d="M12 11v10"/></svg><span class="nt-badge" id="nb-distrib" style="display:none">0</span></span>Distribution</button>
+    <button class="nt" id="n-profile" onclick="go('profile')"><span class="nt-ic"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg></span>Mon club</button>
   </div>
 </div>
 
@@ -966,9 +1033,10 @@ body{font-variant-numeric:tabular-nums}
     <div class="cat-grid" id="cat-grid"></div>
   </div>
   <div class="nav">
-    <button class="nt" id="n-home" onclick="go('home')"><svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>Accueil</button>
-    <button class="nt on" id="n-catalogue" onclick="go('catalogue')"><svg viewBox="0 0 24 24"><path d="M6 7h12l-1 13H7L6 7z"/><path d="M9 7a3 3 0 016 0"/></svg>Vendre</button>
-    <button class="nt" id="n-profile" onclick="go('profile')"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg>Mon club</button>
+    <button class="nt" id="n-home" onclick="go('home')"><span class="nt-ic"><svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg></span>Accueil</button>
+    <button class="nt on" id="n-catalogue" onclick="go('catalogue')"><span class="nt-ic"><svg viewBox="0 0 24 24"><path d="M6 7h12l-1 13H7L6 7z"/><path d="M9 7a3 3 0 016 0"/></svg></span>Vendre</button>
+    <button class="nt" id="n-distrib" onclick="go('distrib')"><span class="nt-ic"><svg viewBox="0 0 24 24"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/><path d="M12 11v10"/></svg><span class="nt-badge" id="nb-distrib" style="display:none">0</span></span>Distribution</button>
+    <button class="nt" id="n-profile" onclick="go('profile')"><span class="nt-ic"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg></span>Mon club</button>
   </div>
 </div>
 
@@ -1086,6 +1154,13 @@ body{font-variant-numeric:tabular-nums}
       <div class="suc-tirage">🎟 <strong>Joueur inscrit au tirage du mois !</strong><br>À gagner : des places pour un match de <strong>Ligue 1, 2 ou 3</strong> 🏆⚽<br><span style="font-size:11px;opacity:.8">1 commande = 1 ticket · Tirage fin de mois</span></div>
 
 
+      <div class="suc-qr" id="suc-qr" style="display:none">
+        <div class="suc-qr-t">📲 Fais-le scanner au joueur</div>
+        <div class="suc-qr-row">
+          <div class="suc-qr-it"><img id="suc-qr-img" alt="QR réseaux TERANGA PERF"><div class="suc-qr-l">Suivre<br><strong>TERANGA PERF</strong></div></div>
+          <div class="suc-qr-it" id="suc-qr2-wrap"><img id="suc-qr2-img" alt="QR page de commande du club"><div class="suc-qr-l">Recommander<br><strong>page du club</strong></div></div>
+        </div>
+      </div>
       <div class="suc-btns">
         <button class="suc-btn new" onclick="newSale()">Nouvelle vente</button>
         <button class="suc-btn home" onclick="go('home')">Accueil</button>
@@ -1136,9 +1211,37 @@ body{font-variant-numeric:tabular-nums}
     </div>
   </div>
   <div class="nav">
-    <button class="nt" id="n-home" onclick="go('home')"><svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>Accueil</button>
-    <button class="nt" id="n-catalogue" onclick="go('catalogue')"><svg viewBox="0 0 24 24"><path d="M6 7h12l-1 13H7L6 7z"/><path d="M9 7a3 3 0 016 0"/></svg>Vendre</button>
-    <button class="nt on" id="n-profile" onclick="go('profile')"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg>Mon club</button>
+    <button class="nt" id="n-home" onclick="go('home')"><span class="nt-ic"><svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg></span>Accueil</button>
+    <button class="nt" id="n-catalogue" onclick="go('catalogue')"><span class="nt-ic"><svg viewBox="0 0 24 24"><path d="M6 7h12l-1 13H7L6 7z"/><path d="M9 7a3 3 0 016 0"/></svg></span>Vendre</button>
+    <button class="nt" id="n-distrib" onclick="go('distrib')"><span class="nt-ic"><svg viewBox="0 0 24 24"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/><path d="M12 11v10"/></svg><span class="nt-badge" id="nb-distrib" style="display:none">0</span></span>Distribution</button>
+    <button class="nt on" id="n-profile" onclick="go('profile')"><span class="nt-ic"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg></span>Mon club</button>
+  </div>
+</div>
+
+<!-- ═══ DISTRIBUTION ═══ -->
+<div class="page" id="pg-distrib">
+  <div class="cat-hdr">
+    <div>
+      <div class="cat-ttl">Distribution</div>
+      <div class="cat-sub">Remise des paires aux joueurs</div>
+    </div>
+  </div>
+  <div class="scz">
+    <div class="dist-wrap">
+      <div class="dist-sum" id="dist-sum"></div>
+      <div class="dist-seg">
+        <button class="on" id="dseg-todo" onclick="distTab('todo')">À remettre <span id="dseg-todo-n">0</span></button>
+        <button id="dseg-done" onclick="distTab('done')">Remis <span id="dseg-done-n">0</span></button>
+      </div>
+      <input class="fi" id="dist-q" placeholder="Chercher un joueur…" oninput="renderDistrib()" autocomplete="off">
+      <div id="dist-list"><div class="spin"><div class="sdot"></div><div class="sdot"></div><div class="sdot"></div></div></div>
+    </div>
+  </div>
+  <div class="nav">
+    <button class="nt" id="n-home" onclick="go('home')"><span class="nt-ic"><svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg></span>Accueil</button>
+    <button class="nt" id="n-catalogue" onclick="go('catalogue')"><span class="nt-ic"><svg viewBox="0 0 24 24"><path d="M6 7h12l-1 13H7L6 7z"/><path d="M9 7a3 3 0 016 0"/></svg></span>Vendre</button>
+    <button class="nt on" id="n-distrib" onclick="go('distrib')"><span class="nt-ic"><svg viewBox="0 0 24 24"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/><path d="M12 11v10"/></svg><span class="nt-badge" id="nb-distrib" style="display:none">0</span></span>Distribution</button>
+    <button class="nt" id="n-profile" onclick="go('profile')"><span class="nt-ic"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg></span>Mon club</button>
   </div>
 </div>
 
@@ -1189,9 +1292,10 @@ body{font-variant-numeric:tabular-nums}
     </div>
   </div>
   <div class="nav">
-    <button class="nt" id="n-home" onclick="go('home')"><svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>Accueil</button>
-    <button class="nt" id="n-catalogue" onclick="go('catalogue')"><svg viewBox="0 0 24 24"><path d="M6 7h12l-1 13H7L6 7z"/><path d="M9 7a3 3 0 016 0"/></svg>Vendre</button>
-    <button class="nt on" id="n-profile" onclick="go('profile')"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg>Mon club</button>
+    <button class="nt" id="n-home" onclick="go('home')"><span class="nt-ic"><svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg></span>Accueil</button>
+    <button class="nt" id="n-catalogue" onclick="go('catalogue')"><span class="nt-ic"><svg viewBox="0 0 24 24"><path d="M6 7h12l-1 13H7L6 7z"/><path d="M9 7a3 3 0 016 0"/></svg></span>Vendre</button>
+    <button class="nt" id="n-distrib" onclick="go('distrib')"><span class="nt-ic"><svg viewBox="0 0 24 24"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/><path d="M12 11v10"/></svg><span class="nt-badge" id="nb-distrib" style="display:none">0</span></span>Distribution</button>
+    <button class="nt on" id="n-profile" onclick="go('profile')"><span class="nt-ic"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg></span>Mon club</button>
   </div>
 </div>
 
@@ -1314,7 +1418,7 @@ function go(p){
     const pg=el.id.replace('n-','');
     el.classList.toggle('on',pg===navActive);
   });
-  if(p==='home' && st.club) loadOrdersList();
+  if(p==='home' && st.club){ loadOrdersList(); loadDistrib(); }
   if(p==='catalogue'){
     buildCat();
     // Mettre à jour le hint
@@ -1334,6 +1438,7 @@ function go(p){
       }
     }
   }
+  if(p==='distrib') loadDistrib();
   if(p==='profile') updateProfile();
 }
 
@@ -1503,6 +1608,107 @@ function deconnexion(){
   const _pl=document.getElementById('pin-login');if(_pl)_pl.value='';
   document.getElementById('cerr').textContent='';
   show('pg-land');
+}
+
+
+// ── DISTRIBUTION DES PAIRES (remise au joueur) ──
+st.dist={tab:'todo',rows:[],loaded:false,confirmId:null};
+function distColorId(c){return (c&&typeof c==='object')?(c.color||c.id||''):c;}
+function distEsc(t){return String(t==null?'':t).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));}
+function distDayLabel(d){
+  if(!d) return 'Sans date prévue';
+  const dt=new Date(d+'T12:00:00');
+  const l=dt.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
+  return l.charAt(0).toUpperCase()+l.slice(1);
+}
+async function loadDistrib(){
+  if(!st.club) return;
+  const rows=await supaFetch('ventes?club_id=eq.'+st.club.id+'&select=*');
+  if(Array.isArray(rows)){st.dist.rows=rows;st.dist.loaded=true;}
+  renderDistrib();
+  updateDistribBadge();
+}
+function distTab(t){
+  st.dist.tab=t;st.dist.confirmId=null;
+  document.getElementById('dseg-todo').classList.toggle('on',t==='todo');
+  document.getElementById('dseg-done').classList.toggle('on',t==='done');
+  renderDistrib();
+}
+function updateDistribBadge(){
+  const todo=(st.dist.rows||[]).filter(v=>!v.recupere);
+  const b=document.getElementById('nb-distrib');
+  document.querySelectorAll('#nb-distrib,.nt-badge').forEach(x=>{x.textContent=todo.length;x.style.display=todo.length?'flex':'none';});
+  const hd=document.getElementById('home-dist');
+  if(hd){
+    const np=todo.reduce((a,v)=>a+(v.nb_paires||0),0);
+    hd.style.display=todo.length?'block':'none';
+    hd.innerHTML=todo.length?`<div class="sec-ttl" style="margin-top:20px">À REMETTRE AUX JOUEURS</div><div class="dist-card" style="cursor:pointer" onclick="go('distrib')"><div class="dist-av">📦</div><div class="dist-main"><div class="dist-n">${np} paire${np>1?'s':''} · ${todo.length} joueur${todo.length>1?'s':''}</div><div class="dist-d">Valide la remise quand chaque joueur a récupéré ses paires</div></div><span style="color:var(--gr);font-weight:800">›</span></div>`:'';
+  }
+}
+function renderDistrib(){
+  const list=document.getElementById('dist-list');
+  if(!list) return;
+  const rows=st.dist.rows||[];
+  if(!st.dist.loaded){
+    list.innerHTML='<div class="dist-empty">Impossible de charger les commandes.<br>Vérifie ta connexion puis rouvre cet onglet.</div>';
+    return;
+  }
+  const todo=rows.filter(v=>!v.recupere), done=rows.filter(v=>v.recupere);
+  const pairsTodo=todo.reduce((a,v)=>a+(v.nb_paires||0),0);
+  document.getElementById('dseg-todo-n').textContent=todo.length;
+  document.getElementById('dseg-done-n').textContent=done.length;
+  document.getElementById('dist-sum').innerHTML=todo.length
+    ? `<div class="big">${pairsTodo}</div><div class="tx"><strong>paire${pairsTodo>1?'s':''} à remettre</strong><br>à ${todo.length} joueur${todo.length>1?'s':''}. Touche « Remis » quand le joueur a récupéré ses paires.</div>`
+    : `<div class="big">0</div><div class="tx"><strong>Rien à remettre</strong><br>Toutes les commandes ont été récupérées par les joueurs.</div>`;
+  const q=(document.getElementById('dist-q').value||'').trim().toLowerCase();
+  let view=(st.dist.tab==='todo'?todo:done).filter(v=>!q||((v.joueur_prenom||'')+' '+(v.joueur_nom||'')).toLowerCase().includes(q));
+  if(!view.length){
+    list.innerHTML='<div class="dist-empty">'+(q?'Aucun joueur trouvé.':st.dist.tab==='todo'?'Aucune commande en attente 🎉':'Aucune remise enregistrée pour l’instant.')+'</div>';
+    return;
+  }
+  // regroupement par jour prévu (à remettre) ou par jour de remise (remis)
+  const key=v=>st.dist.tab==='todo'?(v.date_retrait_prevue||''):((v.recupere_le||'').slice(0,10));
+  view.sort((a,b)=>key(a).localeCompare(key(b))||(a.joueur_nom||'').localeCompare(b.joueur_nom||''));
+  if(st.dist.tab==='done') view.reverse();
+  let html='',last=null;
+  view.forEach(v=>{
+    const k=key(v);
+    if(k!==last){html+=`<div class="dist-day">${st.dist.tab==='todo'?distEsc(distDayLabel(k)):'Remis le '+distEsc(k?new Date(k+'T12:00:00').toLocaleDateString('fr-FR',{day:'numeric',month:'long'}):'—')}</div>`;last=k;}
+    const ini=((v.joueur_prenom||'?')[0]+((v.joueur_nom||'')[0]||'')).toUpperCase();
+    const cols=(Array.isArray(v.coloris)?v.coloris:[]).map(distColorId);
+    const dots=cols.map(id=>{const c=COLOR_MAP[id];return `<span class="dist-dot" title="${distEsc(c?c.label:id)}" style="background:${c?c.hex:'#ccc'}"></span>`;}).join('');
+    const origin=/qr/i.test(v.methode_paiement||'')?'Commande en ligne':'Vente au club';
+    const atClub=v.livre?'<span class="dist-tag ok">📦 Au club</span>':'<span class="dist-tag">⏳ En route</span>';
+    let action='';
+    if(st.dist.tab==='todo'){
+      const conf=st.dist.confirmId===v.id;
+      action=`<button class="dist-btn${conf?' confirm':''}" onclick="distRemis(${v.id})">${conf?'Confirmer ✓':'Remis'}</button>`;
+    }else{
+      const h=v.recupere_le?new Date(v.recupere_le).toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}):'';
+      action=`<div style="text-align:right"><div class="dist-tag ok">✓ ${h}</div><button class="dist-undo" onclick="distAnnuler(${v.id})">Annuler</button></div>`;
+    }
+    html+=`<div class="dist-card"><div class="dist-av">${distEsc(ini)}</div><div class="dist-main"><div class="dist-n">${distEsc(v.joueur_prenom)} ${distEsc(v.joueur_nom)}</div><div class="dist-d">${v.nb_paires||0} paire${(v.nb_paires||0)>1?'s':''} · ${origin}</div><div class="dist-dots">${dots}${st.dist.tab==='todo'?atClub:''}</div></div>${action}</div>`;
+  });
+  list.innerHTML=html;
+}
+async function distRemis(id){
+  if(st.dist.confirmId!==id){
+    st.dist.confirmId=id;renderDistrib();
+    setTimeout(()=>{if(st.dist.confirmId===id){st.dist.confirmId=null;renderDistrib();}},4000);
+    return;
+  }
+  st.dist.confirmId=null;
+  await distSet(id,true);
+}
+async function distAnnuler(id){await distSet(id,false);}
+async function distSet(id,fait){
+  if(!navigator.onLine){toast('Pas de connexion — réessaie plus tard','err');return;}
+  const ok=await rpcCall('club_marquer_remis',{p_id:st.club.id,p_pin:st.pin,p_vente_id:id,p_fait:fait});
+  if(ok!==true){toast('Impossible d’enregistrer — réessaie','err');return;}
+  const v=st.dist.rows.find(x=>x.id===id);
+  if(v){v.recupere=fait;v.recupere_le=fait?new Date().toISOString():null;}
+  toast(fait?'✓ Remise enregistrée':'Remise annulée','ok');
+  renderDistrib();updateDistribBadge();
 }
 
 // ── STATS CLUB ──
@@ -1844,15 +2050,21 @@ async function finaliserVente(method){
   st._lastCart=st.cart.map(i=>({...i}));
   st._lastPrix=st.currentPayPrice;
   st._lastGain=st.currentPayGain;
-  // Afficher QR Linktree
+  // QR après vente : réseaux TERANGA PERF + page de commande du club
   const qrEl=document.getElementById('suc-qr');
   const qrImg=document.getElementById('suc-qr-img');
   if(qrEl&&qrImg){
-    // QR vers Linktree TERANGA PERF — à remplacer par l'URL réelle
-    qrImg.src='https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https://linktr.ee/terangaperf&bgcolor=ffffff&color=000000&margin=2';
-    qrImg.onerror=function(){document.getElementById('suc-qr').style.display='none';};
+    const qr=u=>'https://api.qrserver.com/v1/create-qr-code/?size=240x240&data='+encodeURIComponent(u)+'&bgcolor=ffffff&color=131310&margin=2';
+    qrImg.src=qr('https://linktr.ee/terangaperf');
+    const q2=document.getElementById('suc-qr2-img'),w2=document.getElementById('suc-qr2-wrap');
+    if(q2&&w2){
+      if(st.club&&st.club.id){q2.src=qr('https://espace-ambassadeur-tp.vercel.app/commande.html?club='+encodeURIComponent(st.club.id));w2.style.display='';}
+      else w2.style.display='none';
+    }
+    qrImg.onerror=function(){qrEl.style.display='none';};
     qrEl.style.display='block';
   }
+  loadDistrib();
   // Reset
   st.cart=[]; st.playerInfo=null; st.currentPayPrice=0; st.currentPayGain=0;
   // Rafraîchir le stock pour la prochaine vente
