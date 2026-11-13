@@ -1158,7 +1158,7 @@ body{font-variant-numeric:tabular-nums}
       </div>
       <div class="suc-liv" id="suc-livraison">
         📦 <strong>Commande transmise</strong><br>
-        Livraison au club <strong>chaque vendredi</strong> par votre ambassadeur TERANGA PERF
+        Livraison au club le <strong id="suc-livr">vendredi</strong> par votre ambassadeur TERANGA PERF
       </div>
       <div class="suc-tirage">🎟 <strong>Joueur inscrit au tirage du mois !</strong><br>À gagner : des places pour un match de <strong>Ligue 1, 2 ou 3</strong> 🏆⚽<br><span style="font-size:11px;opacity:.8">1 commande = 1 ticket · Tirage fin de mois</span></div>
 
@@ -2030,6 +2030,7 @@ async function finaliserVente(method){
     }).join(' · ');
     detEl.innerHTML=`👤 <strong>${p.prenom} ${p.nom}</strong> — ${p.cat}<br>🧦 ${colorisStr}<br>💰 ${st.currentPayPrice.toFixed(2).replace('.',',')} € · Gain club : +${gain.toFixed(2).replace('.',',')} €`;
   }
+  const lv=document.getElementById('suc-livr'); if(lv) lv.textContent=dateLivraisonLabel();
   sucEl.classList.add('on');
   upAll();
   // Enregistrement Supabase (ou queue si hors-ligne)
@@ -2089,6 +2090,18 @@ async function finaliserVente(method){
       st.stockCache=newStock;
     }
   }
+}
+
+// Règle de livraison : commande lundi/mardi -> vendredi de la même semaine ; mercredi à dimanche -> vendredi suivant (heure de Paris)
+function dateLivraisonClub(now){
+  now=now||new Date();
+  const [y,m,d]=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Paris',year:'numeric',month:'2-digit',day:'2-digit'}).format(now).split('-').map(Number);
+  const j=new Date(Date.UTC(y,m-1,d)), dow=j.getUTCDay();
+  const v=new Date(j); v.setUTCDate(j.getUTCDate()-((dow+6)%7)+4+((dow===1||dow===2)?0:7));
+  return v;
+}
+function dateLivraisonLabel(){
+  return dateLivraisonClub().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',timeZone:'UTC'});
 }
 
 function sucQr(n){
@@ -2258,7 +2271,7 @@ function copierRecapJoueur(){
   msg+='• Club : '+club+'\n';
   msg+='• Date : '+dateStr+'\n';
   msg+='▬▬▬▬▬▬▬▬▬▬▬▬▬\n\n';
-  msg+='📦 *Livraison* au club le vendredi.\n\n';
+  msg+='📦 *Livraison* au club le '+dateLivraisonLabel()+'.\n\n';
   msg+='🎟 Vous avez gagné *1 ticket* pour le tirage du mois !\n\n';
   msg+='🌐 linktr.ee/terangaperf\n\n';
   msg+='Merci et bonne saison ⚽ *TERANGA PERF*';
@@ -2350,7 +2363,7 @@ Merci pour votre commande TERANGA PERF chez ${club} 🧦✅
 
 🎟 Vous avez gagné un ticket pour le tirage de fin de mois — bonne chance !
 
-📦 Vos chaussettes seront livrées directement au club le vendredi.${telLigne}
+📦 Vos chaussettes seront livrées directement au club le ${dateLivraisonLabel()}.${telLigne}
 
 Pour toute question : terangaperf.fr
 Bonne séance ! 💪
