@@ -1700,7 +1700,7 @@ async function distRemis(id){
   ensureDist();
   if(st.dist.confirmId!==id){
     st.dist.confirmId=id;renderDistrib();
-    setTimeout(()=>{if(st.dist.confirmId===id){st.dist.confirmId=null;renderDistrib();}},4000);
+    setTimeout(()=>{if(st.dist.confirmId===id){st.dist.confirmId=null;renderDistrib();}},8000);
     return;
   }
   st.dist.confirmId=null;
