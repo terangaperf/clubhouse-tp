@@ -2039,7 +2039,11 @@ async function finaliserVente(method){
       statut:'en_cours'
     };
     if(navigator.onLine){
-      await supaFetch('ventes',{method:'POST',body:JSON.stringify(payload),prefer:'return=minimal'});
+      const okV=await enregistrerVente(payload);
+      if(!okV){
+        addToOfflineQueue(payload);
+        toast('⚠️ Vente mise en attente — elle sera renvoyée automatiquement','err');
+      }
     } else {
       addToOfflineQueue(payload);
       toast('📦 Vente sauvegardée — sera synchronisée dès la connexion rétablie','');
@@ -2362,6 +2366,18 @@ function addToOfflineQueue(payload){
   catch(e){}
 }
 
+// Enregistrement d'une vente via la fonction sécurisée (l'écriture directe dans « ventes » est bloquée par la base)
+async function enregistrerVente(pl){
+  if(!st.club||!st.pin) return null;
+  const r=await rpcCall('club_enregistrer_vente',{
+    p_id:st.club.id,p_pin:st.pin,
+    p_prenom:pl.joueur_prenom,p_nom:pl.joueur_nom,p_categorie:pl.joueur_categorie,p_tel:pl.joueur_tel||'',
+    p_coloris:pl.coloris,p_nb_paires:pl.nb_paires,p_montant:Math.round(pl.montant),
+    p_commission:pl.commission,p_methode:pl.methode_paiement
+  });
+  return (typeof r==='number'&&r>0)?r:null;
+}
+
 async function syncOfflineQueue(){
   const q=getOfflineQueue();
   if(!q.length) return;
@@ -2370,12 +2386,8 @@ async function syncOfflineQueue(){
   const remaining=[];
   for(const item of q){
     const {_offline_id, _offline_ts, ...payload}=item;
-    const res=await supaFetch('ventes',{
-      method:'POST',
-      body:JSON.stringify(payload),
-      prefer:'return=minimal'
-    });
-    if(res!==null){ synced++; }
+    const res=await enregistrerVente(payload);
+    if(res){ synced++; }
     else{ remaining.push(item); }
   }
   try{ localStorage.setItem(OFFLINE_KEY, JSON.stringify(remaining)); }
