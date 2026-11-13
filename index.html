@@ -1612,7 +1612,8 @@ function deconnexion(){
 
 
 // ── DISTRIBUTION DES PAIRES (remise au joueur) ──
-st.dist={tab:'todo',rows:[],loaded:false,confirmId:null};
+function ensureDist(){ if(!st.dist) st.dist={tab:'todo',rows:[],loaded:false,confirmId:null}; return st.dist; }
+ensureDist();
 function distColorId(c){return (c&&typeof c==='object')?(c.color||c.id||''):c;}
 function distEsc(t){return String(t==null?'':t).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));}
 function distDayLabel(d){
@@ -1622,6 +1623,7 @@ function distDayLabel(d){
   return l.charAt(0).toUpperCase()+l.slice(1);
 }
 async function loadDistrib(){
+  ensureDist();
   if(!st.club) return;
   const rows=await supaFetch('ventes?club_id=eq.'+st.club.id+'&select=*');
   if(Array.isArray(rows)){st.dist.rows=rows;st.dist.loaded=true;}
@@ -1629,12 +1631,14 @@ async function loadDistrib(){
   updateDistribBadge();
 }
 function distTab(t){
+  ensureDist();
   st.dist.tab=t;st.dist.confirmId=null;
   document.getElementById('dseg-todo').classList.toggle('on',t==='todo');
   document.getElementById('dseg-done').classList.toggle('on',t==='done');
   renderDistrib();
 }
 function updateDistribBadge(){
+  ensureDist();
   const todo=(st.dist.rows||[]).filter(v=>!v.recupere);
   const b=document.getElementById('nb-distrib');
   document.querySelectorAll('#nb-distrib,.nt-badge').forEach(x=>{x.textContent=todo.length;x.style.display=todo.length?'flex':'none';});
@@ -1646,6 +1650,7 @@ function updateDistribBadge(){
   }
 }
 function renderDistrib(){
+  ensureDist();
   const list=document.getElementById('dist-list');
   if(!list) return;
   const rows=st.dist.rows||[];
@@ -1692,6 +1697,7 @@ function renderDistrib(){
   list.innerHTML=html;
 }
 async function distRemis(id){
+  ensureDist();
   if(st.dist.confirmId!==id){
     st.dist.confirmId=id;renderDistrib();
     setTimeout(()=>{if(st.dist.confirmId===id){st.dist.confirmId=null;renderDistrib();}},4000);
@@ -1702,6 +1708,7 @@ async function distRemis(id){
 }
 async function distAnnuler(id){await distSet(id,false);}
 async function distSet(id,fait){
+  ensureDist();
   if(!navigator.onLine){toast('Pas de connexion — réessaie plus tard','err');return;}
   const ok=await rpcCall('club_marquer_remis',{p_id:st.club.id,p_pin:st.pin,p_vente_id:id,p_fait:fait});
   if(ok!==true){toast('Impossible d’enregistrer — réessaie','err');return;}
