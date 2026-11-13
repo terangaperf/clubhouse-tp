@@ -806,13 +806,13 @@ body{font-variant-numeric:tabular-nums}
 .nt-ic{position:relative;display:flex}
 .nt-badge{position:absolute;top:-5px;right:-9px;min-width:16px;height:16px;padding:0 4px;border-radius:9px;background:var(--red);color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;line-height:1}
 .suc-wrap{overflow-y:auto;justify-content:safe center}
-.suc-qr{width:100%;background:#fff;border-radius:var(--r3);padding:12px 10px;margin-bottom:14px;color:var(--t)}
-.suc-qr-t{font-size:12px;font-weight:800;margin-bottom:8px}
-.suc-qr-row{display:flex;gap:10px;justify-content:center}
-.suc-qr-it{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;max-width:150px}
-.suc-qr-it img{width:100%;max-width:120px;aspect-ratio:1;border-radius:8px;background:#fff}
-.suc-qr-l{font-size:10px;color:var(--t2);line-height:1.35}
-.suc-qr-l strong{color:var(--t);font-size:11px}
+.suc-qr{width:100%;background:#fff;border-radius:var(--r3);padding:12px;margin-bottom:14px;color:var(--t);text-align:center}
+.suc-qr-seg{display:flex;gap:4px;background:var(--surf3);padding:3px;border-radius:var(--r4);margin-bottom:10px}
+.suc-qr-seg button{flex:1;border:none;background:transparent;border-radius:var(--r4);padding:8px 6px;font-family:var(--font);font-size:12px;font-weight:700;color:var(--t2);cursor:pointer}
+.suc-qr-seg button.on{background:var(--ink);color:var(--gold)}
+.suc-qr img{width:70%;max-width:190px;aspect-ratio:1;display:block;margin:0 auto;border-radius:8px;background:#fff}
+.suc-qr-cap{font-size:12px;color:var(--t2);margin-top:8px;line-height:1.4}
+.suc-qr-cap strong{color:var(--t)}
 /* Distribution */
 .dist-wrap{padding:14px;display:flex;flex-direction:column;gap:12px}
 .dist-sum{background:var(--ink);color:#fff;border-radius:var(--r2);padding:16px;display:flex;align-items:center;gap:14px}
@@ -1147,6 +1147,15 @@ body{font-variant-numeric:tabular-nums}
       <div class="suc-m" id="suc-meth">💳 SumUp CB</div>
 
 
+      <div class="suc-qr" id="suc-qr" style="display:none">
+        <div class="suc-qr-seg">
+          <button class="on" id="sq-b1" onclick="sucQr(1)">Nous suivre</button>
+          <button id="sq-b2" onclick="sucQr(2)">Recommander</button>
+        </div>
+        <img id="suc-qr-img" alt="QR réseaux TERANGA PERF">
+        <img id="suc-qr2-img" alt="QR page de commande du club" style="display:none">
+        <div class="suc-qr-cap" id="suc-qr-cap">📲 Le joueur scanne pour suivre <strong>TERANGA PERF</strong></div>
+      </div>
       <div class="suc-liv" id="suc-livraison">
         📦 <strong>Commande transmise</strong><br>
         Livraison au club <strong>chaque vendredi</strong> par votre ambassadeur TERANGA PERF
@@ -1154,13 +1163,6 @@ body{font-variant-numeric:tabular-nums}
       <div class="suc-tirage">🎟 <strong>Joueur inscrit au tirage du mois !</strong><br>À gagner : des places pour un match de <strong>Ligue 1, 2 ou 3</strong> 🏆⚽<br><span style="font-size:11px;opacity:.8">1 commande = 1 ticket · Tirage fin de mois</span></div>
 
 
-      <div class="suc-qr" id="suc-qr" style="display:none">
-        <div class="suc-qr-t">📲 Fais-le scanner au joueur</div>
-        <div class="suc-qr-row">
-          <div class="suc-qr-it"><img id="suc-qr-img" alt="QR réseaux TERANGA PERF"><div class="suc-qr-l">Suivre<br><strong>TERANGA PERF</strong></div></div>
-          <div class="suc-qr-it" id="suc-qr2-wrap"><img id="suc-qr2-img" alt="QR page de commande du club"><div class="suc-qr-l">Recommander<br><strong>page du club</strong></div></div>
-        </div>
-      </div>
       <div class="suc-btns">
         <button class="suc-btn new" onclick="newSale()">Nouvelle vente</button>
         <button class="suc-btn home" onclick="go('home')">Accueil</button>
@@ -2067,11 +2069,10 @@ async function finaliserVente(method){
   if(qrEl&&qrImg){
     const qr=u=>'https://api.qrserver.com/v1/create-qr-code/?size=240x240&data='+encodeURIComponent(u)+'&bgcolor=ffffff&color=131310&margin=2';
     qrImg.src=qr('https://linktr.ee/terangaperf');
-    const q2=document.getElementById('suc-qr2-img'),w2=document.getElementById('suc-qr2-wrap');
-    if(q2&&w2){
-      if(st.club&&st.club.id){q2.src=qr('https://espace-ambassadeur-tp.vercel.app/commande.html?club='+encodeURIComponent(st.club.id));w2.style.display='';}
-      else w2.style.display='none';
-    }
+    const q2=document.getElementById('suc-qr2-img');
+    if(q2&&st.club&&st.club.id) q2.src=qr('https://espace-ambassadeur-tp.vercel.app/commande.html?club='+encodeURIComponent(st.club.id));
+    const b2=document.getElementById('sq-b2'); if(b2) b2.style.display=(st.club&&st.club.id)?'':'none';
+    sucQr(1);
     qrImg.onerror=function(){qrEl.style.display='none';};
     qrEl.style.display='block';
   }
@@ -2088,6 +2089,15 @@ async function finaliserVente(method){
       st.stockCache=newStock;
     }
   }
+}
+
+function sucQr(n){
+  const a=document.getElementById('suc-qr-img'),b=document.getElementById('suc-qr2-img'),cap=document.getElementById('suc-qr-cap');
+  if(!a||!b) return;
+  a.style.display=n===1?'block':'none'; b.style.display=n===2?'block':'none';
+  document.getElementById('sq-b1').classList.toggle('on',n===1);
+  document.getElementById('sq-b2').classList.toggle('on',n===2);
+  cap.innerHTML=n===1?'📲 Le joueur scanne pour suivre <strong>TERANGA PERF</strong>':'🧦 Le joueur scanne pour <strong>recommander</strong> depuis la page du club';
 }
 
 function newSale(){
